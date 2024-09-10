@@ -1,0 +1,14 @@
+venv/
+../create_github_repo.sh
+
+# Add all __pycache__ directories
+__pycache__/
+*/__pycache__/
+
+# Add db.sqlite3
+db.sqlite3
+*/db.sqlite3
+
+# Add all migrations folders
+*/migrations/
+migrations/
