@@ -2,8 +2,6 @@ venv/
 
 # Add Create Github Repo script
 create_github_repo.sh
-/create_github_repo.sh
-./create_github_repo.sh
 
 # Add all __pycache__ directories
 __pycache__/
