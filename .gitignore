@@ -14,3 +14,11 @@ db.sqlite3
 # Add all migrations folders
 */migrations/
 migrations/
+
+# Add .env file
+.env
+*/.env
+
+# DS_Store files
+.DS_Store
+*/.DS_Store
