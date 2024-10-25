@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+# Call dotenv to load environment variables in development environment
+if os.environ.get('ENVIRONMENT') != 'production' or os.environ.get('ENVIRONMENT') != 'staging':
+    from dotenv import load_dotenv
+    load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
