@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Created the home app that's for the landing page."
+commit_message="Updated model files for Mission statement set max lenght to content."
 branch_name="main"
 
 # Get the status of the files in the repository
