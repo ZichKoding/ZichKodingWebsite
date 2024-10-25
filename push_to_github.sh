@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Updating the push_to_github.sh file"
+commit_message="Created the home app that's for the landing page."
 branch_name="main"
 
 # Get the status of the files in the repository
