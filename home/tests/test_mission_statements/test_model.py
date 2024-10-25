@@ -1,10 +1,12 @@
+import datetime
+
 from django.test import TestCase
 
 from home.models import MissionStatement
 
 
+# MissionStatement
 # Models
-# MissionStatement model
 class MissionStatementModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -35,3 +37,12 @@ class MissionStatementModelTest(TestCase):
         mission_statement = MissionStatement.objects.get(id=1)
         mission_statement.is_active = False
         self.assertFalse(mission_statement.is_active)
+
+    def test_mission_statement_published_date(self):
+        mission_statement = MissionStatement.objects.get(id=1)
+        self.assertIsNotNone(mission_statement.published_date)
+
+    def test_mission_statement_published_date_editable(self):
+        mission_statement = MissionStatement.objects.get(id=1)
+        is_editable = mission_statement._meta.get_field('published_date').editable
+        self.assertFalse(is_editable)
