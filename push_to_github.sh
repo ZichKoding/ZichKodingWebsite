@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Created Summary model and added the fields along with unit tests."
+commit_message="Created Summary admin view and unit tests."
 branch_name="main"
 
 # Get the status of the files in the repository
