@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Added a class for the MissionStatementView and tested. I figure I can add features more easily this way."
+commit_message="Cleaning up unused code."
 branch_name="main"
 
 # Get the status of the files in the repository
