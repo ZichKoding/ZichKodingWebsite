@@ -10,7 +10,8 @@ class MissionStatementModelTest(TestCase):
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
         MissionStatement.objects.create(
-            mission_statement='To provide a platform for people to learn how to code and to share their knowledge with others.'
+            mission_statement='To provide a platform for people to learn how to code and to share their knowledge with others.',
+            is_active=True
         )
     
     def test_mission_statement_content_success(self):
@@ -25,3 +26,12 @@ class MissionStatementModelTest(TestCase):
         mission_statement = MissionStatement.objects.get(id=1)
         max_length = mission_statement._meta.get_field('mission_statement').max_length
         self.assertEqual(max_length, 250)
+
+    def test_mission_statement_is_active_true(self):
+        mission_statement = MissionStatement.objects.get(id=1)
+        self.assertTrue(mission_statement.is_active)
+
+    def test_mission_statement_is_active_false(self):
+        mission_statement = MissionStatement.objects.get(id=1)
+        mission_statement.is_active = False
+        self.assertFalse(mission_statement.is_active)
