@@ -51,7 +51,6 @@ class ProjectsAdminTest(TestCase):
         self.assertContains(response, 'id_image')
         self.assertContains(response, 'id_url')
         self.assertContains(response, 'id_gh_url')
-        # self.assertContains(response, 'Published date')
         self.assertContains(response, 'Published date')
 
         
