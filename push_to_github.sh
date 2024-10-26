@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Projects app and model has now been created and tested."
+commit_message="Failing to see the projects image file through the admin view."
 branch_name="main"
 
 # Get the status of the files in the repository
