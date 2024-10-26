@@ -12,10 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+debug_or_not_to_debug = False
+
 # Call dotenv to load environment variables in development environment
 if os.environ.get('ENVIRONMENT') != 'production' or os.environ.get('ENVIRONMENT') != 'staging':
     from dotenv import load_dotenv
     load_dotenv()
+    debug_or_not_to_debug = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +34,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = debug_or_not_to_debug
 
 ALLOWED_HOSTS = ['127.0.0.1']
 

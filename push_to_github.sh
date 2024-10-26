@@ -1,5 +1,5 @@
 # Initialize the variables for commit message and branch name.
-commit_message="Have not fixed the admin view for the image, but I did fix the failing test for published date because I did not add it as a readonly field."
+commit_message="You can now see the image uploaded to the admin view for projects."
 branch_name="main"
 
 # Get the status of the files in the repository
