@@ -82,3 +82,16 @@ class TestProjectModel(TestCase):
     def test_gh_url_field(self):
         project = Project.objects.get(id=1)
         self.assertTrue(isinstance(project.gh_url, str))
+
+    def test_is_active_label(self):
+        project = Project.objects.get(id=1)
+        field_label = project._meta.get_field('is_active').verbose_name
+        self.assertEqual(field_label, 'is active')
+
+    def test_is_active_default(self):
+        project = Project.objects.get(id=1)
+        self.assertEqual(project.is_active, False)
+
+    def test_is_active_field(self):
+        project = Project.objects.get(id=1)
+        self.assertTrue(isinstance(project.is_active, bool))

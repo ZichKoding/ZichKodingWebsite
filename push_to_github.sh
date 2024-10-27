@@ -1,6 +1,25 @@
+#!/bin/bash
+
 # Initialize the variables for commit message and branch name.
-commit_message="You can now see the image uploaded to the admin view for projects."
+commit_message="I saw that I didn't have an is_active field in the project model so had to update before proceeding."
 branch_name="main"
+
+# Function to run tests
+run_tests() {
+    # Try running tests with 'python'
+    if python manage.py test; then
+        echo "Tests passed with 'python'."
+    # If 'python' fails, try 'python3'
+    elif python3 manage.py test; then
+        echo "Tests passed with 'python3'."
+    else
+        echo "Tests failed. Please fix the errors before pushing to the repository."
+        exit 1
+    fi
+}
+
+# Run the tests
+run_tests
 
 # Get the status of the files in the repository
 git status
