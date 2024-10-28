@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
 from home.models import MissionStatement, Summary
+from projects.views import ProjectView
+
 
 class MissionStatementView:
     def get_random_mission_statement():
@@ -12,3 +14,4 @@ class SummaryView:
     def get_most_recent_active_summary():
         summary = Summary.objects.filter(is_active=True).order_by('-published_date').first()
         return summary
+    
