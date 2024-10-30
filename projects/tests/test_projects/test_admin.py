@@ -46,6 +46,7 @@ class ProjectsAdminTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Change project')
         self.assertContains(response, 'id_title')
+        self.assertContains(response, 'id_is_active')
         self.assertContains(response, 'id_description')
         self.assertContains(response, 'id_content')
         self.assertContains(response, 'id_image')

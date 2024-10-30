@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Getting setup for creating the landing page view."
+commit_message="Was able to get the home view created and tested. It needs to be updated within the html file."
 branch_name="main"
 
 # Function to run tests
