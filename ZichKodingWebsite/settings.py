@@ -23,9 +23,35 @@ if os.environ.get('ENVIRONMENT') != 'production' or os.environ.get('ENVIRONMENT'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# MD Editor settings
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+MDEDITOR_CONFIGS = {
+    'default': {
+        'width': '100%',
+        'height': 500,
+        'toolbar': ["undo", "redo", "|", "bold", "italic", "quote"],  # Example toolbar
+        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp", "svg"],
+        'image_folder': 'editor',
+        'theme': 'dark',
+        'preview_theme': 'dark',
+        'editor_theme': 'pastel-on-dark',
+        'toolbar_autofixed': False,
+        'search_replace': True,
+        'emoji': True,
+        'tex': True,
+        'flow_chart': True,
+        'sequence': True,
+        'watch': True,
+        'lineWrapping': True,
+        'lineNumbers': True,
+        'language': 'en',
+    }
+}
+
 # Media files settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -48,8 +74,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mdeditor',
     'home',
-    'projects'
+    'projects',
 ]
 
 MIDDLEWARE = [
