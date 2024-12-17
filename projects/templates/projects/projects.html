@@ -9,14 +9,17 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <!-- Search Bar -->
-        <div class="row mb-4">
-            <div class="col-md-6 offset-md-3 position-relative">
-                <input type="text" id="search-bar" class="form-control" placeholder="Search Projects...">
-                <ul id="typeahead-results" class="list-group position-absolute w-100"></ul>
-            </div>
+<div class="container">
+    <!-- Back Button and Search Bar -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <a href="/projects" class="btn btn-secondary w-100">Back to Project List</a>
         </div>
+        <div class="col-12 col-md-9">
+            <input type="text" id="search-bar" class="form-control" placeholder="Search Projects...">
+            <ul id="typeahead-results" class="list-group position-absolute w-100"></ul>
+        </div>
+    </div>
 
         <!-- Existing project listings -->
         <div class="row" id="project-listings">
@@ -44,6 +47,7 @@
     <script>
         $(document).ready(function(){
             let debounceTimeout = null;
+            let selectedIndex = -1;
 
             // Typeahead Functionality with Debouncing
             $('#search-bar').on('input', function(){
@@ -60,9 +64,10 @@
                             success: function(data){
                                 $('#typeahead-results').empty();
                                 if(data.length > 0){
-                                    data.forEach(function(item){
-                                        $('#typeahead-results').append('<li class="list-group-item">' + item + '</li>');
+                                    data.forEach(function(item, index){
+                                        $('#typeahead-results').append('<li class="list-group-item" data-index="' + index + '">' + item + '</li>');
                                     });
+                                    selectedIndex = -1; // Reset selected index
                                 } else {
                                     $('#typeahead-results').append('<li class="list-group-item">No results found</li>');
                                 }
@@ -81,76 +86,101 @@
                 }, 300); // 300ms delay for debouncing
             });
 
-            // Handle Enter Key Press for Full Search
+            // Handle Enter and Arrow Keys for Full Search and Navigation
             $('#search-bar').on('keydown', function(e){
-                if(e.key === 'Enter'){
-                    e.preventDefault(); // Prevent form submission if inside a form
-
-                    let query = $(this).val().trim();
-                    if(query.length === 0){
-                        // If the search query is empty, clear the results and typeahead
-                        $('#project-listings').empty();
-                        $('#typeahead-results').empty();
-                        return;
+                let items = $('#typeahead-results li');
+                if(e.key === 'ArrowDown'){
+                    e.preventDefault();
+                    if(selectedIndex < items.length - 1){
+                        selectedIndex++;
+                        items.removeClass('active');
+                        $(items[selectedIndex]).addClass('active');
                     }
-
-                    // Hide the typeahead dropdown
-                    $('#typeahead-results').empty();
-
-                    // Show loading indicator
-                    $('#loading-indicator').show();
-
-                    // Perform AJAX request for full search
-                    $.ajax({
-                        url: '{% url "project-search" %}', // Ensure this URL exists in your Django URLs
-                        data: {'query': query},
-                        success: function(data){
-                            $('#project-listings').empty(); // Clear existing project listings
-
-                            if(data.results.length > 0){
-                                data.results.forEach(function(project){
-                                    // Customize the HTML structure based on your project model
-                                    $('#project-listings').append(`
-                                        <div class="col-md-4 mb-4">
-                                            <div class="card">
-                                                <img src="${project.image}" class="card-img-top" alt="${project.title}">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${project.title}</h5>
-                                                    <p class="card-text">${project.description}</p>
-                                                    <a href="${project.url}" class="btn btn-primary">View Project</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `);
-                                });
-                            } else {
-                                $('#project-listings').append('<div class="col-md-12"><p>No projects found matching your search.</p></div>');
-                            }
-
-                            // Update the URL with the search query
-                            const newUrl = new URL(window.location.href);
-                            newUrl.searchParams.set('query', query);
-                            window.history.pushState({}, '', newUrl);
-                        },
-                        error: function(){
+                } else if(e.key === 'ArrowUp'){
+                    e.preventDefault();
+                    if(selectedIndex > 0){
+                        selectedIndex--;
+                        items.removeClass('active');
+                        $(items[selectedIndex]).addClass('active');
+                    }
+                } else if(e.key === 'Enter'){
+                    e.preventDefault();
+                    if(selectedIndex >= 0 && selectedIndex < items.length){
+                        let selectedText = $(items[selectedIndex]).text();
+                        $('#search-bar').val(selectedText);
+                        $('#typeahead-results').empty();
+                        performSearch(selectedText);
+                    } else {
+                        let query = $(this).val().trim();
+                        if(query.length === 0){
                             $('#project-listings').empty();
-                            $('#project-listings').append('<div class="col-md-12"><p>An error occurred while searching. Please try again later.</p></div>');
-                        },
-                        complete: function(){
-                            $('#loading-indicator').hide();
+                            $('#typeahead-results').empty();
+                            return;
                         }
-                    });
+                        $('#typeahead-results').empty();
+                        performSearch(query);
+                    }
+                } else if(e.key === 'Tab'){
+                    if(selectedIndex >= 0 && selectedIndex < items.length){
+                        let selectedText = $(items[selectedIndex]).text();
+                        $('#search-bar').val(selectedText);
+                        $('#typeahead-results').empty();
+                        performSearch(selectedText);
+                    }
                 }
             });
+
+            // Perform AJAX request for full search
+            function performSearch(query){
+                // Show loading indicator
+                $('#loading-indicator').show();
+
+                $.ajax({
+                    url: '{% url "project-search" %}',
+                    data: {'query': query},
+                    success: function(data){
+                        $('#project-listings').empty(); // Clear existing project listings
+
+                        if(data.results.length > 0){
+                            data.results.forEach(function(project){
+                                $('#project-listings').append(`
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <img src="${project.image}" class="card-img-top" alt="${project.title}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${project.title}</h5>
+                                                <p class="card-text">${project.description}</p>
+                                                <a href="${project.url}" class="btn btn-primary">View Project</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        } else {
+                            $('#project-listings').append('<div class="col-md-12"><p>No projects found matching your search.</p></div>');
+                        }
+
+                        // Update the URL with the search query
+                        const newUrl = new URL(window.location.href);
+                        newUrl.searchParams.set('query', query);
+                        window.history.pushState({}, '', newUrl);
+                    },
+                    error: function(){
+                        $('#project-listings').empty();
+                        $('#project-listings').append('<div class="col-md-12"><p>An error occurred while searching. Please try again later.</p></div>');
+                    },
+                    complete: function(){
+                        $('#loading-indicator').hide();
+                    }
+                });
+            }
 
             // Handle Click on Typeahead Result
             $(document).on('click', '#typeahead-results li', function(){
                 let selectedText = $(this).text();
                 $('#search-bar').val(selectedText);
                 $('#typeahead-results').empty();
-
-                // Trigger the search immediately after selecting from typeahead
-                $('#search-bar').trigger($.Event('keydown', { key: 'Enter' }));
+                performSearch(selectedText);
             });
 
             // Click outside to hide typeahead
