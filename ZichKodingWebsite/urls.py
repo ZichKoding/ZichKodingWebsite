@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),  # Include the URLs from home/urls.py
     path('mdeditor/', include('mdeditor.urls')),
+    path('projects/', include('projects.urls')),
 ]
 
 if settings.DEBUG:

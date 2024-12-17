@@ -9,7 +9,7 @@ class Project(models.Model):
     image = models.ImageField(upload_to='projects/')
     url = models.URLField()
     gh_url = models.URLField()
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     published_date = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):

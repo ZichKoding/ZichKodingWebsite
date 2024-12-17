@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Search Projects</h1>
+    <input type="text" id="search-bar" placeholder="Search by title...">
+    <ul id="typeahead-results"></ul>
+
+    <script>
+        $(document).ready(function(){
+            $('#search-bar').on('input', function(){
+                let query = $(this).val();
+                if(query.length > 2){
+                    $.ajax({
+                        url: '/projects/search/typeahead/',
+                        data: {'query': query},
+                        success: function(data){
+                            $('#typeahead-results').empty();
+                            data.forEach(function(item){
+                                $('#typeahead-results').append('<li>' + item + '</li>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#typeahead-results').empty();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Updated Markdown toolbar"
+commit_message="Basic functionality for projects and searching with typeahead and dropdown are now added."
 branch_name="main"
 
 # Function to run tests
