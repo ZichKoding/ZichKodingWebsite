@@ -62,11 +62,6 @@ class TestProjectModel(TestCase):
         project = Project.objects.get(id=1)
         self.assertTrue(isinstance(project.content, str))
 
-    def test_published_date_auto_now_add(self):
-        project = Project.objects.get(id=1)
-        auto_now_add = project._meta.get_field('published_date').auto_now_add
-        self.assertEqual(auto_now_add, True)
-
     def test_project_str_method(self):
         project = Project.objects.get(id=1)
         self.assertEqual(str(project), project.title)

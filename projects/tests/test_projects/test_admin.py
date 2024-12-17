@@ -25,7 +25,9 @@ class ProjectsAdminTest(TestCase):
             content='A test project',
             image='projects/test.jpg',
             url='http://example.com',
-            gh_url='http://github.com'
+            gh_url='http://github.com',
+            is_active=True,
+            published_date='2021-01-01'
         )
 
     def test_projects_list(self):
@@ -38,7 +40,10 @@ class ProjectsAdminTest(TestCase):
         self.assertContains(response, self.project.description)
         self.assertContains(response, self.project.url)
         self.assertContains(response, self.project.gh_url)
-        self.assertContains(response, self.project.published_date.strftime('%Y-%m-%d'))
+        
+        # Admin displays date as "Jan. 1, 2021, midnight"
+        formatted_date = "Jan. 1, 2021, midnight"
+        self.assertContains(response, formatted_date)
 
     def test_projects_detail(self):
         response = self.client.get(reverse('admin:projects_project_change', args=[self.project.id]))
@@ -54,5 +59,3 @@ class ProjectsAdminTest(TestCase):
         self.assertContains(response, 'id_gh_url')
         self.assertContains(response, 'Image preview')
         self.assertContains(response, 'Published date')
-
-        

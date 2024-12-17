@@ -14,18 +14,22 @@ class ProjectView:
 
 class ProjectListView(View):
     def get(self, request):
-        projects = ProjectView.get_three_random_active_projects()
+        # Order projects by published_date descending (newest first)
+        projects = Project.objects.filter(is_active=True).order_by('-published_date')
         return render(request, 'projects/projects.html', {'projects': projects})
 
 class ProjectSearchView(View):
     def get(self, request):
         query = request.GET.get('query', '')
-        projects = Project.objects.filter(title__icontains=query, is_active=True)
+        projects = Project.objects.filter(title__icontains=query, is_active=True).order_by('-published_date')
         return render(request, 'projects/search_results.html', {'projects': projects})
 
 class ProjectTypeAheadView(View):
     def get(self, request):
         query = request.GET.get('query', '')
-        projects = Project.objects.filter(title__icontains=query, is_active=True)[:5]
+        projects = Project.objects.filter(
+            title__icontains=query,
+            is_active=True
+        ).order_by('-published_date')[:5]  # Ensure descending order
         project_titles = list(projects.values_list('title', flat=True))
         return JsonResponse(project_titles, safe=False)

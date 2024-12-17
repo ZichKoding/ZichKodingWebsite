@@ -1,14 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'projects/css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
-    <h1>Search Results</h1>
-    <ul>
-        {% for project in projects %}
-            <li>{{ project.title }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container my-5">
+        <h1 class="mb-4">Search Results</h1>
+        <div class="row" id="search-results-list">
+            {% for project in projects %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.description }}</p>
+                            <a href="{{ project.url }}" class="btn btn-primary" target="_blank">View Project</a>
+                            <a href="{{ project.gh_url }}" class="btn btn-secondary" target="_blank">GitHub</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Published on {{ project.published_date|date:"F j, Y" }}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No projects found matching your query.</p>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

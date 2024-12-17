@@ -1,26 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Projects</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <h1>Search Projects</h1>
-    <input type="text" id="search-bar" placeholder="Search by title...">
-    <ul id="typeahead-results"></ul>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Projects - ZichKoding{% endblock %}
+
+{% block extra_head %}
+    <!-- Custom CSS for Projects -->
+    <link href="{% static 'projects/css/projects.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Search Projects</h1>
+    <div id="search-container" class="mb-3">
+        <input type="text" id="search-bar" class="form-control" placeholder="Search by title...">
+        <ul id="typeahead-results" class="list-group mt-2"></ul>
+    </div>
+
+    <h2 class="mt-5">Projects</h2>
+    <div class="row" id="projects-list">
+        {% for project in projects %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                        <a href="{{ project.url }}" class="btn btn-primary" target="_blank">View Project</a>
+                        <a href="{{ project.gh_url }}" class="btn btn-secondary" target="_blank">GitHub</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Published on {{ project.published_date|date:"F j, Y" }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
     <script>
         $(document).ready(function(){
             $('#search-bar').on('input', function(){
                 let query = $(this).val();
                 if(query.length > 2){
                     $.ajax({
-                        url: '/projects/search/typeahead/',
+                        url: '{% url "project-typeahead" %}',
                         data: {'query': query},
                         success: function(data){
                             $('#typeahead-results').empty();
                             data.forEach(function(item){
-                                $('#typeahead-results').append('<li>' + item + '</li>');
+                                $('#typeahead-results').append('<li class="list-group-item">' + item + '</li>');
                             });
                         }
                     });
@@ -30,5 +58,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

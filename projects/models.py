@@ -10,7 +10,10 @@ class Project(models.Model):
     url = models.URLField()
     gh_url = models.URLField()
     is_active = models.BooleanField(default=True)
-    published_date = models.DateTimeField(auto_now_add=True, editable=False)
+    published_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-published_date']
 
     def __str__(self):
         return self.title

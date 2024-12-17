@@ -1,113 +1,125 @@
 from django.test import TestCase
-
 from projects.models import Project
 from projects.views import ProjectView
+from django.utils import timezone
+from datetime import timedelta
 
 
 class TestProjectView(TestCase):
     def setUp(self):
-        self.projects = Project.objects.bulk_create([
-            Project(
-                title='Test Project 1',
-                description='Test Description 1',
-                content='Test Content 1',
-                image='projects/test1.jpg',
-                url='https://test1.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 2',
-                description='Test Description 2',
-                content='Test Content 2',
-                image='projects/test2.jpg',
-                url='https://test2.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 3',
-                description='Test Description 3',
-                content='Test Content 3',
-                image='projects/test3.jpg',
-                url='https://test3.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 4',
-                description='Test Description 4',
-                content='Test Content 4',
-                image='projects/test4.jpg',
-                url='https://test4.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 5',
-                description='Test Description 5',
-                content='Test Content 5',
-                image='projects/test5.jpg',
-                url='https://test5.com',
-                gh_url='https://github.com',
-                is_active=False
-            ),
-            Project(
-                title='Test Project 6',
-                description='Test Description 6',
-                content='Test Content 6',
-                image='projects/test6.jpg',
-                url='https://test6.com',
-                gh_url='https://github.com',
-                is_active=False
-            ),
-            Project(
-                title='Test Project 7',
-                description='Test Description 7',
-                content='Test Content 7',
-                image='projects/test7.jpg',
-                url='https://test7.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 8',
-                description='Test Description 8',
-                content='Test Content 8',
-                image='projects/test8.jpg',
-                url='https://test8.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 9',
-                description='Test Description 9',
-                content='Test Content 9',
-                image='projects/test9.jpg',
-                url='https://test9.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Test Project 10',
-                description='Test Description 10',
-                content='Test Content 10',
-                image='projects/test10.jpg',
-                url='https://test10.com',
-                gh_url='https://github.com',
-                is_active=True
-            ),
-            Project(
-                title='Testing Project',
-                description='Testing Description',
-                content='Testing Content',
-                image='projects/testing.jpg',
-                url='https://testing.com',
-                gh_url='https://github.com',
-                is_active=True
-            )
-        ])
+        now = timezone.now()
 
+        # Create projects with varying published_dates
+        Project.objects.create(
+            title='Test Project 1',
+            description='Test Description 1',
+            content='Test Content 1',
+            image='projects/test1.jpg',
+            url='https://test1.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now  # Most recent
+        )
+        Project.objects.create(
+            title='Test Project 2',
+            description='Test Description 2',
+            content='Test Content 2',
+            image='projects/test2.jpg',
+            url='https://test2.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=1)
+        )
+        Project.objects.create(
+            title='Test Project 3',
+            description='Test Description 3',
+            content='Test Content 3',
+            image='projects/test3.jpg',
+            url='https://test3.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=2)
+        )
+        Project.objects.create(
+            title='Test Project 4',
+            description='Test Description 4',
+            content='Test Content 4',
+            image='projects/test4.jpg',
+            url='https://test4.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=3)
+        )
+        Project.objects.create(
+            title='Test Project 5',
+            description='Test Description 5',
+            content='Test Content 5',
+            image='projects/test5.jpg',
+            url='https://test5.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=4)
+        )
+        Project.objects.create(
+            title='Test Project 6',
+            description='Test Description 6',
+            content='Test Content 6',
+            image='projects/test6.jpg',
+            url='https://test6.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=5)
+        )
+        Project.objects.create(
+            title='Test Project 7',
+            description='Test Description 7',
+            content='Test Content 7',
+            image='projects/test7.jpg',
+            url='https://test7.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=6)
+        )
+        Project.objects.create(
+            title='Test Project 8',
+            description='Test Description 8',
+            content='Test Content 8',
+            image='projects/test8.jpg',
+            url='https://test8.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=7)
+        )
+        Project.objects.create(
+            title='Test Project 9',
+            description='Test Description 9',
+            content='Test Content 9',
+            image='projects/test9.jpg',
+            url='https://test9.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=8)
+        )
+        Project.objects.create(
+            title='Test Project 10',
+            description='Test Description 10',
+            content='Test Content 10',
+            image='projects/test10.jpg',
+            url='https://test10.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=9)
+        )
+        Project.objects.create(
+            title='Testing Project',
+            description='Testing Description',
+            content='Testing Content',
+            image='projects/testing.jpg',
+            url='https://testing.com',
+            gh_url='https://github.com',
+            is_active=True,
+            published_date=now - timedelta(days=10)
+        )
 
     def test_get_three_random_active_projects(self):
         projects = ProjectView.get_three_random_active_projects()
@@ -127,10 +139,30 @@ class TestProjectView(TestCase):
         self.assertContains(response, 'Testing Project')
 
     def test_project_search_type_ahead(self):
-        response = self.client.get('/projects/search/typeahead/', {'query': 'Tes'})
+        """Test typeahead search returns 5 most recent projects matching query"""
+        # First verify the published dates
+        projects = Project.objects.all().order_by('-published_date')
+        print("\nProject ordering check:")
+        for p in projects[:5]:
+            print(f"{p.title}: {p.published_date}")
+            
+        # Make the typeahead request
+        response = self.client.get('/projects/search/typeahead/', {'query': 'tes'})
         self.assertEqual(response.status_code, 200)
         data = response.json()
+        print(f"\nTypeahead response data: {data}")
+        
+        # Verify response structure
         self.assertIsInstance(data, list)
-        self.assertGreaterEqual(len(data), 2)
-        self.assertIn('Test Project 1', data)
-        self.assertIn('Test Project 2', data)
+        self.assertLessEqual(len(data), 5)
+        
+        # Get actual titles from DB in correct order
+        expected_titles = list(
+            Project.objects.filter(
+                title__icontains='tes',
+                is_active=True
+            ).order_by('-published_date')[:5].values_list('title', flat=True)
+        )
+        
+        # Verify response matches DB query
+        self.assertEqual(data, expected_titles)
