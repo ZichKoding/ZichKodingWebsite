@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Added a markdown editor to the Projects admin view."
+commit_message="Updated Markdown toolbar"
 branch_name="main"
 
 # Function to run tests
