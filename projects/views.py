@@ -22,7 +22,17 @@ class ProjectSearchView(View):
     def get(self, request):
         query = request.GET.get('query', '')
         projects = Project.objects.filter(title__icontains=query, is_active=True).order_by('-published_date')
-        return render(request, 'projects/search_results.html', {'projects': projects})
+        
+        # Prepare the JSON response
+        results = []
+        for project in projects:
+            results.append({
+                'title': project.title,
+                'description': project.description[:200] + '...',  # Truncate description if necessary
+                'url': project.url,  # Ensure get_absolute_url is defined
+            })
+        
+        return JsonResponse({'results': results})
 
 class ProjectTypeAheadView(View):
     def get(self, request):

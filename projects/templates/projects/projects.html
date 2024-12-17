@@ -9,52 +9,157 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Search Projects</h1>
-    <div id="search-container" class="mb-3">
-        <input type="text" id="search-bar" class="form-control" placeholder="Search by title...">
-        <ul id="typeahead-results" class="list-group mt-2"></ul>
-    </div>
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-6 offset-md-3 position-relative">
+                <input type="text" id="search-bar" class="form-control" placeholder="Search Projects...">
+                <ul id="typeahead-results" class="list-group position-absolute w-100"></ul>
+            </div>
+        </div>
 
-    <h2 class="mt-5">Projects</h2>
-    <div class="row" id="projects-list">
-        {% for project in projects %}
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description }}</p>
-                        <a href="{{ project.url }}" class="btn btn-primary" target="_blank">View Project</a>
-                        <a href="{{ project.gh_url }}" class="btn btn-secondary" target="_blank">GitHub</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        Published on {{ project.published_date|date:"F j, Y" }}
+        <!-- Existing project listings -->
+        <div class="row" id="project-listings">
+            {% for project in projects %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                            <a href="{{ project.get_absolute_url }}" class="btn btn-primary">View Project</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% empty %}
+                <div class="col-md-12">
+                    <p>No projects available.</p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 
 {% block extra_scripts %}
     <script>
         $(document).ready(function(){
+            let debounceTimeout = null;
+
+            // Typeahead Functionality with Debouncing
             $('#search-bar').on('input', function(){
+                clearTimeout(debounceTimeout);
                 let query = $(this).val();
-                if(query.length > 2){
+                debounceTimeout = setTimeout(function(){
+                    if(query.length > 2){
+                        $.ajax({
+                            url: '{% url "project-typeahead" %}',
+                            data: {'query': query},
+                            beforeSend: function(){
+                                $('#loading-indicator').show();
+                            },
+                            success: function(data){
+                                $('#typeahead-results').empty();
+                                if(data.length > 0){
+                                    data.forEach(function(item){
+                                        $('#typeahead-results').append('<li class="list-group-item">' + item + '</li>');
+                                    });
+                                } else {
+                                    $('#typeahead-results').append('<li class="list-group-item">No results found</li>');
+                                }
+                            },
+                            error: function(){
+                                $('#typeahead-results').empty();
+                                $('#typeahead-results').append('<li class="list-group-item">Error fetching results</li>');
+                            },
+                            complete: function(){
+                                $('#loading-indicator').hide();
+                            }
+                        });
+                    } else {
+                        $('#typeahead-results').empty();
+                    }
+                }, 300); // 300ms delay for debouncing
+            });
+
+            // Handle Enter Key Press for Full Search
+            $('#search-bar').on('keydown', function(e){
+                if(e.key === 'Enter'){
+                    e.preventDefault(); // Prevent form submission if inside a form
+
+                    let query = $(this).val().trim();
+                    if(query.length === 0){
+                        // If the search query is empty, clear the results and typeahead
+                        $('#project-listings').empty();
+                        $('#typeahead-results').empty();
+                        return;
+                    }
+
+                    // Hide the typeahead dropdown
+                    $('#typeahead-results').empty();
+
+                    // Show loading indicator
+                    $('#loading-indicator').show();
+
+                    // Perform AJAX request for full search
                     $.ajax({
-                        url: '{% url "project-typeahead" %}',
+                        url: '{% url "project-search" %}', // Ensure this URL exists in your Django URLs
                         data: {'query': query},
                         success: function(data){
-                            $('#typeahead-results').empty();
-                            data.forEach(function(item){
-                                $('#typeahead-results').append('<li class="list-group-item">' + item + '</li>');
-                            });
+                            $('#project-listings').empty(); // Clear existing project listings
+
+                            if(data.results.length > 0){
+                                data.results.forEach(function(project){
+                                    // Customize the HTML structure based on your project model
+                                    $('#project-listings').append(`
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card">
+                                                <img src="${project.image}" class="card-img-top" alt="${project.title}">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${project.title}</h5>
+                                                    <p class="card-text">${project.description}</p>
+                                                    <a href="${project.url}" class="btn btn-primary">View Project</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `);
+                                });
+                            } else {
+                                $('#project-listings').append('<div class="col-md-12"><p>No projects found matching your search.</p></div>');
+                            }
+
+                            // Update the URL with the search query
+                            const newUrl = new URL(window.location.href);
+                            newUrl.searchParams.set('query', query);
+                            window.history.pushState({}, '', newUrl);
+                        },
+                        error: function(){
+                            $('#project-listings').empty();
+                            $('#project-listings').append('<div class="col-md-12"><p>An error occurred while searching. Please try again later.</p></div>');
+                        },
+                        complete: function(){
+                            $('#loading-indicator').hide();
                         }
                     });
-                } else {
-                    $('#typeahead-results').empty();
                 }
+            });
+
+            // Handle Click on Typeahead Result
+            $(document).on('click', '#typeahead-results li', function(){
+                let selectedText = $(this).text();
+                $('#search-bar').val(selectedText);
+                $('#typeahead-results').empty();
+
+                // Trigger the search immediately after selecting from typeahead
+                $('#search-bar').trigger($.Event('keydown', { key: 'Enter' }));
+            });
+
+            // Click outside to hide typeahead
+            $(document).click(function(event) { 
+                var $target = $(event.target);
+                if(!$target.closest('#search-bar').length && 
+                !$target.closest('#typeahead-results').length) {
+                    $('#typeahead-results').empty();
+                }        
             });
         });
     </script>

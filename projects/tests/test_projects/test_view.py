@@ -3,6 +3,7 @@ from projects.models import Project
 from projects.views import ProjectView
 from django.utils import timezone
 from datetime import timedelta
+from django.urls import reverse
 
 
 class TestProjectView(TestCase):
@@ -132,11 +133,25 @@ class TestProjectView(TestCase):
         self.assertContains(response, 'Search Projects')
 
     def test_search_project(self):
-        response = self.client.get('/projects/search/', {'query': 'Test'})
+        """Test search returns correct JSON response"""
+        response = self.client.get(reverse('project-search'), {'query': 'Test'})
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Test Project 1')
-        self.assertContains(response, 'Test Project 2')
-        self.assertContains(response, 'Testing Project')
+        self.assertEqual(response['Content-Type'], 'application/json')
+
+        data = response.json()
+        self.assertIn('results', data)
+        self.assertGreater(len(data['results']), 0)
+
+        # Check that the returned projects match the expected titles
+        expected_titles = list(
+            Project.objects.filter(
+                title__icontains='Test',
+                is_active=True
+            ).order_by('-published_date').values_list('title', flat=True)
+        )
+
+        returned_titles = [project['title'] for project in data['results']]
+        self.assertEqual(returned_titles, expected_titles[:len(returned_titles)])
 
     def test_project_search_type_ahead(self):
         """Test typeahead search returns 5 most recent projects matching query"""
