@@ -14,33 +14,33 @@ class TestSummaryModel(TestCase):
     def test_summary_content_label(self):
         summary = Summary.objects.get(id=1)
         field_label = summary._meta.get_field('content').verbose_name
-        self.assertEquals(field_label, 'content')
+        self.assertEqual(field_label, 'content')
 
     def test_summary_is_active_label(self):
         summary = Summary.objects.get(id=1)
         field_label = summary._meta.get_field('is_active').verbose_name
-        self.assertEquals(field_label, 'is active')
+        self.assertEqual(field_label, 'is active')
 
     def test_summary_published_date_label(self):
         summary = Summary.objects.get(id=1)
         field_label = summary._meta.get_field('published_date').verbose_name
-        self.assertEquals(field_label, 'published date')
+        self.assertEqual(field_label, 'published date')
 
     def test_summary_content_max_length(self):
         summary = Summary.objects.get(id=1)
         max_length = summary._meta.get_field('content').max_length
-        self.assertEquals(max_length, 500)
+        self.assertEqual(max_length, 500)
 
     def test_summary_is_active_default(self):
         summary = Summary.objects.get(id=1)
         default = summary._meta.get_field('is_active').default
-        self.assertEquals(default, True)
+        self.assertEqual(default, True)
 
     def test_summary_published_date_auto_now_add(self):
         summary = Summary.objects.get(id=1)
         auto_now_add = summary._meta.get_field('published_date').auto_now_add
-        self.assertEquals(auto_now_add, True)
+        self.assertEqual(auto_now_add, True)
 
     def test_summary_str_method(self):
         summary = Summary.objects.get(id=1)
-        self.assertEquals(str(summary), summary.content)
+        self.assertEqual(str(summary), summary.content)

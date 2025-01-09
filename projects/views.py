@@ -11,6 +11,25 @@ class ProjectView:
         if len(active_projects) >= 3:
             return random.sample(active_projects, 3)
         return active_projects
+        
+    def get_single_project_by_title(title):
+        '''
+        This method will get a project's
+        details to display on a separate page.
+        Args:
+            :title: String value for the title of the project. 
+            
+        Returns:
+            Returns an object of all the fields necessary for a single project view.
+            
+        Raises:
+            TypeError if the title is not a string.
+            ValueError if the title doesn't exist in the database. 
+            TimeoutError if the query timed out before satisfying the request. 
+            Exception if an error occurred that's out of scope for the 3 listed above. 
+        '''
+        single_project = Project.objects.get(title=title)
+        return single_project
 
 class ProjectListView(View):
     def get(self, request):

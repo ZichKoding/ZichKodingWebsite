@@ -181,3 +181,15 @@ class TestProjectView(TestCase):
         
         # Verify response matches DB query
         self.assertEqual(data, expected_titles)
+        
+    def test_projects_get_single_project_by_title(self):
+        '''
+        Testing get_single_project_by_title()
+        '''
+        title_to_get = 'Test Project 2'
+        # Expected should include all of the fields.
+        expected = Project.objects.get(title=title_to_get)
+        
+        actual = ProjectView.get_single_project_by_title(title_to_get)
+        
+        self.assertEqual(expected, actual)
