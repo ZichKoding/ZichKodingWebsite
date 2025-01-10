@@ -1,9 +1,12 @@
+from datetime import timedelta
+from unittest.mock import patch
+
 from django.test import TestCase
+from django.utils import timezone
+from django.urls import reverse
+
 from projects.models import Project
 from projects.views import ProjectView
-from django.utils import timezone
-from datetime import timedelta
-from django.urls import reverse
 
 
 class TestProjectView(TestCase):
@@ -193,3 +196,57 @@ class TestProjectView(TestCase):
         actual = ProjectView.get_single_project_by_title(title_to_get)
         
         self.assertEqual(expected, actual)
+        
+    def test_projects_get_single_project_by_title_TypeError(self):
+        '''
+        Testing get_single_project_by_title() ability to handle a type error. 
+        '''
+        title_to_get = 12345
+        
+        expected = "`title` must be a string."
+        
+        with self.assertRaises(TypeError) as context:
+            ProjectView.get_single_project_by_title(title_to_get)
+        
+        self.assertEqual(expected, str(context.exception))
+        
+    def test_projects_get_single_project_by_title_ValueError(self):
+        '''
+        Testing get_single_project_by_title() ability to handle a value error.
+        '''
+        title_to_get = "This is my project"
+        
+        expected = "The title is an invalid value."
+        
+        with self.assertRaises(ValueError) as context:
+            ProjectView.get_single_project_by_title(title_to_get)
+            
+        self.assertEqual(expected, str(context.exception))
+        
+    def test_projects_get_single_project_by_title_TimeoutError(self):
+        '''
+        Testing get_single_project_by_title() ability to handle a timeout error.
+        '''
+        title_to_get = "Test Project 1"
+        
+        expected = "TimeoutError has occurred while retriveing the project. Please try again later or contact the administrator."
+        
+        with patch("projects.models.Project.objects.get", side_effect=TimeoutError):
+            with self.assertRaises(TimeoutError) as context:
+                ProjectView.get_single_project_by_title(title_to_get)
+            
+        self.assertEqual(expected, str(context.exception))
+
+    def test_projects_get_single_project_by_title_Exception(self):
+        '''
+        Testing get_single_project_by_title() ability to handle an unexpected error.
+        '''
+        title_to_get = "Test Project 1"
+        
+        expected = f"An unexpected error occurred while searching for '{title_to_get}'."
+        
+        with patch("projects.models.Project.objects.get", side_effect=Exception):
+            with self.assertRaises(Exception) as context:
+                ProjectView.get_single_project_by_title(title_to_get)
+            
+        self.assertEqual(expected, str(context.exception))

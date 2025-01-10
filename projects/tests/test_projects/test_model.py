@@ -85,7 +85,7 @@ class TestProjectModel(TestCase):
 
     def test_is_active_default(self):
         project = Project.objects.create(title='Default Active Project')
-        self.assertEqual(project.is_active, True)  # Updated to expect True
+        self.assertEqual(project.is_active, True)
 
     def test_is_active_field(self):
         project = Project.objects.get(id=1)

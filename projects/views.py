@@ -1,8 +1,14 @@
+import random
+import logging
+
 from django.http import JsonResponse
 from django.views import View
 from django.shortcuts import render
+
 from projects.models import Project
-import random
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 class ProjectView:
     @staticmethod
@@ -28,8 +34,25 @@ class ProjectView:
             TimeoutError if the query timed out before satisfying the request. 
             Exception if an error occurred that's out of scope for the 3 listed above. 
         '''
-        single_project = Project.objects.get(title=title)
-        return single_project
+        logging.info(f"Verifying type of the title({title})...")
+        if isinstance(title, str) is False:
+            raise TypeError("`title` must be a string.")
+        
+        try:
+            logging.info("Attempting to retrieve the project...")
+            single_project = Project.objects.get(title=title)
+            logging.info("Returning the project...")
+            return single_project
+        except Project.DoesNotExist:
+            logging.error(f"Project does not exist '{title}'")
+            raise ValueError("The title is an invalid value.")
+        except TimeoutError:
+            logging.error(f"Timeout occurred while searching for '{title}'")
+            raise TimeoutError("TimeoutError has occurred while retriveing the project. Please try again later or contact the administrator.")
+        except Exception as e:
+            logging.error(f"An unexpected error has occurred: {e}")
+            raise Exception(f"An unexpected error occurred while searching for '{title}'.")
+
 
 class ProjectListView(View):
     def get(self, request):
