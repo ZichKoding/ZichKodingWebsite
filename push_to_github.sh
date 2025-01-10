@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="creating unit test for single project view."
+commit_message="Core logic for loading one project is tested and complete. Next is the frontend work."
 branch_name="main"
 
 # Function to run tests
