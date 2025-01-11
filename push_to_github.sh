@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Core logic for loading one project is tested and complete. Next is the frontend work."
+commit_message="Single Project View is now complete for the basic view."
 branch_name="main"
 
 # Function to run tests
