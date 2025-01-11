@@ -189,11 +189,12 @@ class TestProjectView(TestCase):
         '''
         Testing get_single_project_by_title()
         '''
-        title_to_get = 'Test Project 2'
+        title_to_get = 'test-project-2'
         # Expected should include all of the fields.
-        expected = Project.objects.get(title=title_to_get)
+        expected = Project.objects.get(slug=title_to_get)
         
-        actual = ProjectView.get_single_project_by_title(title_to_get)
+        model = ProjectView()
+        actual = model.get_single_project_by_title(title_to_get)
         
         self.assertEqual(expected, actual)
         
@@ -202,11 +203,11 @@ class TestProjectView(TestCase):
         Testing get_single_project_by_title() ability to handle a type error. 
         '''
         title_to_get = 12345
-        
+        model = ProjectView()
         expected = "`title` must be a string."
         
         with self.assertRaises(TypeError) as context:
-            ProjectView.get_single_project_by_title(title_to_get)
+            model.get_single_project_by_title(title_to_get)
         
         self.assertEqual(expected, str(context.exception))
         
@@ -218,8 +219,9 @@ class TestProjectView(TestCase):
         
         expected = "The title is an invalid value."
         
+        model = ProjectView()
         with self.assertRaises(ValueError) as context:
-            ProjectView.get_single_project_by_title(title_to_get)
+            model.get_single_project_by_title(title_to_get)
             
         self.assertEqual(expected, str(context.exception))
         
@@ -231,9 +233,10 @@ class TestProjectView(TestCase):
         
         expected = "TimeoutError has occurred while retriveing the project. Please try again later or contact the administrator."
         
+        model = ProjectView()
         with patch("projects.models.Project.objects.get", side_effect=TimeoutError):
             with self.assertRaises(TimeoutError) as context:
-                ProjectView.get_single_project_by_title(title_to_get)
+                model.get_single_project_by_title(title_to_get)
             
         self.assertEqual(expected, str(context.exception))
 
@@ -245,8 +248,9 @@ class TestProjectView(TestCase):
         
         expected = f"An unexpected error occurred while searching for '{title_to_get}'."
         
+        model = ProjectView()
         with patch("projects.models.Project.objects.get", side_effect=Exception):
             with self.assertRaises(Exception) as context:
-                ProjectView.get_single_project_by_title(title_to_get)
+                model.get_single_project_by_title(title_to_get)
             
         self.assertEqual(expected, str(context.exception))

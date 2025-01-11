@@ -30,7 +30,9 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">{{ project.description|truncatewords:20 }}</p>
-                            <a href="{{ project.get_absolute_url }}" class="btn btn-primary">View Project</a>
+                            <a href="{% url 'get_project' project.slug %}" class="btn btn-primary">
+                                View Project
+                            </a>
                         </div>
                     </div>
                 </div>
