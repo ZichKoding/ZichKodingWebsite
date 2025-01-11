@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Single Project View is now complete for the basic view."
+commit_message="Basic model for contact me is added and tested."
 branch_name="main"
 
 # Function to run tests

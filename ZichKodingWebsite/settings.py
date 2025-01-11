@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'mdeditor',
     'home',
     'projects',
+    'contact_me',
 ]
 
 MIDDLEWARE = [
