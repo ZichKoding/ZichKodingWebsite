@@ -32,8 +32,7 @@ run_tests
 
 # Display the branch name and confirm the branch is correct from user input.
 branch_name=$(git branch | grep \* | cut -d ' ' -f2)
-branch_name=$(green_text $branch_name)
-echo "You are on branch: $branch_name"
+echo "You are on branch: $(green_text "$branch_name")"
 read -p "Is this the correct branch? ($(green_text "y")/$(red_text "n")): " branch_confirmation
 
 # If the branch is not correct, exit the script.
@@ -68,7 +67,7 @@ git commit -m "$commit_message"
 git status
 
 # Confirm pushing the files to the repository
-read -p "Do you want to push the files to the repository? ($(green_text 'y')/$(red_text "n")): " push_confirmation
+read -p "Do you want to push the files to the repository? ($(green_text "y")/$(red_text "n")): " push_confirmation
 
 # If the user does not want to push the files, exit the script.
 if [ $push_confirmation != "y" ]; then
