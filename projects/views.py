@@ -99,7 +99,8 @@ class ProjectSearchView(View):
             results.append({
                 'title': project.title,
                 'description': project.description[:200] + '...',  # Truncate description if necessary
-                'url': project.url,  # Ensure get_absolute_url is defined
+                'image': project.image.url,  # Ensure image is not null
+                'slug': project.slug,
             })
         
         return JsonResponse({'results': results})

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Basic contact model has been created."
+commit_message="Updating the api for typeahead and searching along with the template."
 branch_name="main"
 
 # Function to run tests

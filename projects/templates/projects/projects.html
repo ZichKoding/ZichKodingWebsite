@@ -4,13 +4,11 @@
 {% block title %}Projects - ZichKoding{% endblock %}
 
 {% block extra_head %}
-    <!-- Custom CSS for Projects -->
     <link href="{% static 'projects/css/projects.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <!-- Back Button and Search Bar -->
     <div class="row mb-4">
         <div class="col-12 col-md-3 mb-2 mb-md-0">
             <a href="/projects" class="btn btn-secondary w-100">Back to Project List</a>
@@ -21,130 +19,134 @@
         </div>
     </div>
 
-        <!-- Existing project listings -->
-        <div class="row" id="project-listings">
-            {% for project in projects %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ project.title }}</h5>
-                            <p class="card-text">{{ project.description|truncatewords:20 }}</p>
-                            <a href="{% url 'get_project' project.slug %}" class="btn btn-primary">
-                                View Project
-                            </a>
-                        </div>
+    <div class="row" id="project-listings">
+        {% for project in projects %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                        <a href="{% url 'get_project' project.slug %}" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
-            {% empty %}
-                <div class="col-md-12">
-                    <p>No projects available.</p>
-                </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% empty %}
+            <div class="col-md-12">
+                <p>No projects available.</p>
+            </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}
 
 {% block extra_scripts %}
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
+            console.log('Document ready');
             let debounceTimeout = null;
             let selectedIndex = -1;
 
-            // Typeahead Functionality with Debouncing
-            $('#search-bar').on('input', function(){
+            $('#search-bar').on('input', function() {
                 clearTimeout(debounceTimeout);
-                let query = $(this).val();
-                debounceTimeout = setTimeout(function(){
-                    if(query.length > 2){
+                const query = $(this).val();
+                console.log('Search input:', query);
+                debounceTimeout = setTimeout(function() {
+                    if (query.length > 2) {
+                        console.log('Performing typeahead AJAX request with query:', query);
                         $.ajax({
                             url: '{% url "project-typeahead" %}',
-                            data: {'query': query},
-                            beforeSend: function(){
+                            data: { 'query': query },
+                            beforeSend: function() {
+                                console.log('Typeahead request sent');
                                 $('#loading-indicator').show();
                             },
-                            success: function(data){
+                            success: function(data) {
+                                console.log('Typeahead response received:', data);
                                 $('#typeahead-results').empty();
-                                if(data.length > 0){
-                                    data.forEach(function(item, index){
-                                        $('#typeahead-results').append('<li class="list-group-item" data-index="' + index + '">' + item + '</li>');
+                                if (data.length > 0) {
+                                    data.forEach(function(item, index) {
+                                        $('#typeahead-results').append(`<li class="list-group-item" data-index="${index}">${item}</li>`);
                                     });
-                                    selectedIndex = -1; // Reset selected index
+                                    selectedIndex = -1;
                                 } else {
                                     $('#typeahead-results').append('<li class="list-group-item">No results found</li>');
                                 }
                             },
-                            error: function(){
+                            error: function() {
+                                console.error('Error fetching typeahead results');
                                 $('#typeahead-results').empty();
                                 $('#typeahead-results').append('<li class="list-group-item">Error fetching results</li>');
                             },
-                            complete: function(){
+                            complete: function() {
+                                console.log('Typeahead AJAX request completed');
                                 $('#loading-indicator').hide();
                             }
                         });
                     } else {
+                        console.log('Query too short, clearing results');
                         $('#typeahead-results').empty();
                     }
-                }, 300); // 300ms delay for debouncing
+                }, 300);
             });
 
-            // Handle Enter and Arrow Keys for Full Search and Navigation
-            $('#search-bar').on('keydown', function(e){
-                let items = $('#typeahead-results li');
-                if(e.key === 'ArrowDown'){
+            $('#search-bar').on('keydown', function(e) {
+                const items = $('#typeahead-results li');
+                console.log('Key pressed:', e.key);
+                if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    if(selectedIndex < items.length - 1){
+                    if (selectedIndex < items.length - 1) {
                         selectedIndex++;
+                        console.log('ArrowDown, selectedIndex:', selectedIndex);
                         items.removeClass('active');
                         $(items[selectedIndex]).addClass('active');
                     }
-                } else if(e.key === 'ArrowUp'){
+                } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
-                    if(selectedIndex > 0){
+                    if (selectedIndex > 0) {
                         selectedIndex--;
+                        console.log('ArrowUp, selectedIndex:', selectedIndex);
                         items.removeClass('active');
                         $(items[selectedIndex]).addClass('active');
                     }
-                } else if(e.key === 'Enter'){
+                } else if (e.key === 'Enter') {
                     e.preventDefault();
-                    if(selectedIndex >= 0 && selectedIndex < items.length){
-                        let selectedText = $(items[selectedIndex]).text();
+                    if (selectedIndex >= 0 && selectedIndex < items.length) {
+                        const selectedText = $(items[selectedIndex]).text();
+                        console.log('Enter pressed, selectedText:', selectedText);
                         $('#search-bar').val(selectedText);
                         $('#typeahead-results').empty();
                         performSearch(selectedText);
                     } else {
-                        let query = $(this).val().trim();
-                        if(query.length === 0){
-                            $('#project-listings').empty();
+                        const query = $(this).val().trim();
+                        console.log('Enter pressed, query:', query);
+                        if (query.length > 0) {
                             $('#typeahead-results').empty();
-                            return;
+                            performSearch(query);
                         }
-                        $('#typeahead-results').empty();
-                        performSearch(query);
                     }
-                } else if(e.key === 'Tab'){
-                    if(selectedIndex >= 0 && selectedIndex < items.length){
-                        let selectedText = $(items[selectedIndex]).text();
-                        $('#search-bar').val(selectedText);
-                        $('#typeahead-results').empty();
-                        performSearch(selectedText);
-                    }
+                } else if (e.key === 'Tab' && selectedIndex >= 0 && selectedIndex < items.length) {
+                    const selectedText = $(items[selectedIndex]).text();
+                    console.log('Tab pressed, selectedText:', selectedText);
+                    $('#search-bar').val(selectedText);
+                    $('#typeahead-results').empty();
+                    performSearch(selectedText);
                 }
             });
 
-            // Perform AJAX request for full search
-            function performSearch(query){
-                // Show loading indicator
+            function performSearch(query) {
+                console.log('Performing full search with query:', query);
                 $('#loading-indicator').show();
 
                 $.ajax({
                     url: '{% url "project-search" %}',
-                    data: {'query': query},
-                    success: function(data){
-                        $('#project-listings').empty(); // Clear existing project listings
-
-                        if(data.results.length > 0){
-                            data.results.forEach(function(project){
+                    data: { 'query': query },
+                    success: function(data) {
+                        console.log('Full search response received:', data);
+                        $('#project-listings').empty();
+                        if (data.results.length > 0) {
+                            data.results.forEach(function(project) {
+                                console.log('Appending project:', project);
                                 $('#project-listings').append(`
                                     <div class="col-md-4 mb-4">
                                         <div class="card">
@@ -152,46 +154,45 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">${project.title}</h5>
                                                 <p class="card-text">${project.description}</p>
-                                                <a href="project/${project.slug}" class="btn btn-primary">View Project</a>
+                                                <a href="/projects/${project.slug}" class="btn btn-primary">View Project</a>
                                             </div>
                                         </div>
                                     </div>
                                 `);
                             });
                         } else {
+                            console.log('No projects found matching the search');
                             $('#project-listings').append('<div class="col-md-12"><p>No projects found matching your search.</p></div>');
                         }
-
-                        // Update the URL with the search query
                         const newUrl = new URL(window.location.href);
                         newUrl.searchParams.set('query', query);
                         window.history.pushState({}, '', newUrl);
                     },
-                    error: function(){
+                    error: function() {
+                        console.error('Error occurred during full search');
                         $('#project-listings').empty();
                         $('#project-listings').append('<div class="col-md-12"><p>An error occurred while searching. Please try again later.</p></div>');
                     },
-                    complete: function(){
+                    complete: function() {
+                        console.log('Full search AJAX request completed');
                         $('#loading-indicator').hide();
                     }
                 });
             }
 
-            // Handle Click on Typeahead Result
-            $(document).on('click', '#typeahead-results li', function(){
-                let selectedText = $(this).text();
+            $(document).on('click', '#typeahead-results li', function() {
+                const selectedText = $(this).text();
+                console.log('Typeahead item clicked, selectedText:', selectedText);
                 $('#search-bar').val(selectedText);
                 $('#typeahead-results').empty();
                 performSearch(selectedText);
             });
 
-            // Click outside to hide typeahead
-            $(document).click(function(event) { 
-                var $target = $(event.target);
-                if(!$target.closest('#search-bar').length && 
-                !$target.closest('#typeahead-results').length) {
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#search-bar, #typeahead-results').length) {
+                    console.log('Click outside search bar and typeahead results');
                     $('#typeahead-results').empty();
-                }        
+                }
             });
         });
     </script>
