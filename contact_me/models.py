@@ -7,14 +7,17 @@ class Contact(models.Model):
     email = models.EmailField(unique=True, max_length=255)
 
     def __str__(self):
-        return self.id
+        return f"{self.first_name} {self.last_name} - {self.email}"
     
 
 class Message(models.Model):
+    acknowledged = models.BooleanField(default=False)
+    subject = models.CharField(max_length=100, blank=True)
     message = models.TextField(max_length=1000)
     project_url = models.URLField()
     project_title = models.CharField(blank=True, max_length=100)
     contact_id = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name='messages', null=False, blank=False)
+    submitted_at = models.DateTimeField(auto_now_add=True, editable=True)
 
     def __str__(self):
-        return self.project_title, self.project_url, self.contact_id
+        return f"{self.contact_id} - {self.project_title}"

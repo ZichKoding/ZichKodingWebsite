@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from contact_me.models import Contact, Message
-from contact_me.admin import ContactAdmin
+from contact_me.admin import ContactAdmin, MessageInline
 
 
 class TestContactAdmin(TestCase):
@@ -20,6 +20,7 @@ class TestContactAdmin(TestCase):
         )
 
         self.message1 = Message.objects.create(
+            subject="Test Subject",
             message="This is a test message",
             project_url="http://www.test.com/test-project",
             project_title="Test Project",
@@ -27,6 +28,7 @@ class TestContactAdmin(TestCase):
         )
 
         self.message2 = Message.objects.create(
+            subject="Test Subject 2",
             message="This is a test message for test project 2",
             project_url="http://www.test.com/test-project-2",
             project_title="Test Project 2",
@@ -38,9 +40,22 @@ class TestContactAdmin(TestCase):
         Test that the contact admin is created correctly
         '''
         contact_admin = ContactAdmin(Contact, None)
-        self.assertEqual(contact_admin.get_queryset(None).count(), 2)
-        self.assertEqual(contact_admin.get_queryset(None)[0].email, self.contact.email)
-        self.assertEqual(contact_admin.get_queryset(None)[1].email, self.contact2.email)
-        self.assertEqual(contact_admin.get_queryset(None)[0].first_name, self.contact.first_name)
-        self.assertEqual(contact_admin.get_queryset(None)[1].first_name, self.contact2.first_name)
-        
+        self.assertEqual(contact_admin.inlines, [MessageInline])
+        self.assertEqual(contact_admin.list_display, ('first_name', 'last_name', 'email', 'acknowledged_count', 'unacknowledged_count'))
+        self.assertEqual(contact_admin.search_fields, ['first_name', 'last_name', 'email'])
+        self.assertEqual(contact_admin.list_filter, ['first_name', 'last_name', 'email'])
+        self.assertEqual(contact_admin.ordering, ['first_name', 'last_name', 'email'])
+        self.assertEqual(contact_admin.fields, ['first_name', 'last_name', 'email'])
+        self.assertEqual(contact_admin.list_per_page, 10)
+        self.assertEqual(contact_admin.actions, None)
+        self.assertEqual(contact_admin.save_on_top, True)
+        self.assertEqual(contact_admin.show_full_result_count, True)
+        self.assertEqual(contact_admin.show_change_link, True)
+
+
+    def test_contact_admin_search_fields(self):
+        '''
+        Test that the search fields are set correctly
+        '''
+        contact_admin = ContactAdmin(Contact, None)
+        self.assertEqual(contact_admin.search_fields, ['first_name', 'last_name', 'email'])
