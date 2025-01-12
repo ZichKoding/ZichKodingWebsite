@@ -68,7 +68,7 @@ git commit -m "$commit_message"
 git status
 
 # Confirm pushing the files to the repository
-read -p "Do you want to push the files to the repository? ($(green_text "y")/$(red_text "n")): " push_confirmation
+read -p "Do you want to push the files to the repository? ($(green_text 'y')/$(red_text "n")): " push_confirmation
 
 # If the user does not want to push the files, exit the script.
 if [ $push_confirmation != "y" ]; then
