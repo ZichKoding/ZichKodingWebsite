@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">{{ project.description }}</p>
-                            <a href="{{ project.url }}" class="btn btn-primary" target="_blank">View Project</a>
+                            <a href="{% url 'get_project' project.slug %}" class="btn btn-primary" target="_blank">View Project</a>
                             <a href="{{ project.gh_url }}" class="btn btn-secondary" target="_blank">GitHub</a>
                         </div>
                         <div class="card-footer text-muted">

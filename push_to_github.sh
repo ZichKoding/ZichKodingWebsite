@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize the variables for commit message and branch name.
-commit_message="Basic model for contact me is added and tested."
+commit_message="Basic contact model has been created."
 branch_name="main"
 
 # Function to run tests
