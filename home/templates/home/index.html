@@ -11,9 +11,24 @@
         </div>
         <div class="projects my-4">
             <h2>Projects</h2>
-            {% for project in projects %}
-                <p>{{ project.title }}</p>
-            {% endfor %}
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <a href="{% url 'get_project' project.slug %}">
+                                <img src="{{ project.image.url }}" class="card-img-top img-fluid" alt="{{ project.title }}">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'get_project' project.slug %}" class="text-decoration-none">
+                                        {{ project.title }}
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="summary my-4">
             <h2>Summary</h2>

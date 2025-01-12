@@ -32,3 +32,5 @@ class TestHomeViews(TestCase):
         self.assertContains(response, self.mission_statement.mission_statement)
         self.assertContains(response, self.summary.content)
         self.assertContains(response, self.project.title)
+        self.assertContains(response, self.project.image.url)
+        self.assertContains(response, self.project.slug)
