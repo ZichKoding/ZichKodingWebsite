@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Form - ZichKoding{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Contact Us</h1>
+    <form class="needs-validation" novalidate>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <div class="invalid-feedback">
+                    Please provide your first name.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                <div class="invalid-feedback">
+                    Please provide your last name.
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback">
+                Please provide a valid email address.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" name="subject" required>
+            <div class="invalid-feedback">
+                Please provide a subject.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            <div class="invalid-feedback">
+                Please provide a message.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="project_url" class="form-label">Project URL</label>
+            <input type="url" class="form-control" id="project_url" name="project_url" required>
+            <div class="invalid-feedback">
+                Please provide a valid project URL.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="project_title" class="form-label">Project Title</label>
+            <input type="text" class="form-control" id="project_title" name="project_title">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    // Bootstrap validation
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+{% endblock %}

@@ -16,8 +16,8 @@
                        href="{% url 'project-list' %}">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
-                       href="{% url 'home' %}">Contact</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" 
+                       href="{% url 'contact' %}">Contact</a>
                 </li>
             </ul>
         </div>

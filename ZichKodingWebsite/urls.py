@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('home.urls')),  # Include the URLs from home/urls.py
     path('mdeditor/', include('mdeditor.urls')),
     path('projects/', include('projects.urls')),
+    path('contact/', include('contact_me.urls')),
 ]
 
 if settings.DEBUG:
