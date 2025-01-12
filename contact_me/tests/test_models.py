@@ -5,6 +5,7 @@ from contact_me.models import Contact, Message
 
 class TestContactModel(TestCase):
     def setUp(self):
+        # Create a contact objects for testing
         Contact.objects.create(
             first_name="Chris",
             last_name="Zichko",
@@ -18,6 +19,9 @@ class TestContactModel(TestCase):
         )
 
     def test_contact_model(self):
+        '''
+        Test that the contact model is created correctly
+        '''
         contact = Contact.objects.get(email="test2@email.com")
         self.assertEqual(contact.first_name, "Chris")
         self.assertEqual(contact.last_name, "Zichko")
@@ -26,14 +30,17 @@ class TestContactModel(TestCase):
 
 class TestMessageModel(TestCase):
     def setUp(self):
+        # Create a contact object for testing
         self.contact = Contact.objects.create(
             first_name="Chris",
             last_name="Zichko",
             email="test@email.com",
         )
         
+        # Get the contact id
         self.contact_id = self.contact.id
 
+        # Create message objects for testing
         Message.objects.create(
             message="This is a test message",
             project_url="http://www.test.com/test-project",
@@ -49,6 +56,9 @@ class TestMessageModel(TestCase):
         )
 
     def test_message_model(self):
+        '''
+        Test that the message model is created correctly
+        '''
         message = Message.objects.get(project_title="Test Project")
         self.assertEqual(message.message, "This is a test message")
         self.assertEqual(message.project_url, "http://www.test.com/test-project")
