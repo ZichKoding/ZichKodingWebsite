@@ -12,7 +12,7 @@ class Contact(models.Model):
 
 class Message(models.Model):
     acknowledged = models.BooleanField(default=False)
-    subject = models.CharField(max_length=100, blank=True)
+    subject = models.CharField(max_length=255, blank=True)
     message = models.TextField(max_length=1000)
     project_url = models.URLField()
     project_title = models.CharField(blank=True, max_length=100)

@@ -19,6 +19,12 @@ if os.environ.get('ENVIRONMENT') != 'production' or os.environ.get('ENVIRONMENT'
     from dotenv import load_dotenv
     load_dotenv()
     debug_or_not_to_debug = True
+    CSRF_COOKIE_HTTPONLY = False
+    CSRF_COOKIE_SECURE = False
+else:
+    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_SECURE = True
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,7 +75,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = debug_or_not_to_debug
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'zichkoding.com', 'https://zichkoding.com']
 
 
 # Application definition

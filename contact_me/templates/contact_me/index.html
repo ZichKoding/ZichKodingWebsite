@@ -5,7 +5,9 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">Contact Us</h1>
-    <form class="needs-validation" novalidate>
+    <div id="response-message" class="alert d-none" role="alert"></div>
+    <form method="post" action="{% url 'contact/api/message' %}" class="needs-validation" novalidate>
+        {% csrf_token %}
         <div class="row mb-3">
             <div class="col-md-6">
                 <label for="first_name" class="form-label">First Name</label>
@@ -69,20 +71,47 @@
     (function () {
         'use strict'
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
+        const forms = document.querySelectorAll('.needs-validation');
 
-        // Loop over them and prevent submission
         Array.from(forms).forEach(function (form) {
             form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (form.checkValidity()) {
+                    const formData = new FormData(form);
+                    fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            showResponseMessage('Thanks for contacting me! I\'ll review the message as soon as I can.', 'success');
+                        } else {
+                            throw new Error('Submission failed');
+                        }
+                    })
+                    .catch(() => {
+                        showResponseMessage('An error occurred while trying to contact me.', 'danger');
+                    });
                 }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        function showResponseMessage(message, type) {
+            const responseMessage = document.getElementById('response-message');
+            responseMessage.textContent = message;
+            responseMessage.className = `alert alert-${type}`;
+            responseMessage.classList.remove('d-none');
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        }
+    })();
 </script>
 {% endblock %}
