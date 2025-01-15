@@ -1,0 +1,51 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment directories
+env/
+venv/
+.venv/
+
+# Ignore version control directories
+.git/
+.gitignore
+
+# Ignore system files
+.DS_Store
+
+# Ignore local settings
+**/settings/local.py
+
+# Ignore media files
+media/
+
+# Add Create Github Repo script
+create_github_repo.sh
+
+# Add all __pycache__ directories
+__pycache__/
+*/__pycache__/
+
+# Add db.sqlite3
+db.sqlite3
+*/db.sqlite3
+
+# Add all migrations folders
+*/migrations/
+migrations/
+
+# Add .env file
+.env
+*/.env
+
+# DS_Store files
+.DS_Store
+*/.DS_Store
+
+# Backup files
+backup.json
+*/backup.json
+./backup.json
+/.backup.json
