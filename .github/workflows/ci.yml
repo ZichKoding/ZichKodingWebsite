@@ -22,10 +22,11 @@ jobs:
           POSTGRES_PASSWORD: postgres  # Default password for PostgreSQL
           POSTGRES_DB: test_db  # Default database name for PostgreSQL
         options: >-
-          --health-cmd="pg_isready -U postgres"  # Command to check PostgreSQL health
-          --health-interval=10s  # Check health every 10 seconds
-          --health-timeout=5s  # Timeout for each health check
-          --health-retries=5  # Retry 5 times before marking the service as unhealthy
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       # Step 1: Check out the code repository
       - name: Checkout code
@@ -43,21 +44,25 @@ jobs:
           echo "Installing dependencies..."
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       # Step 4: Configure database environment variable
       - name: Set environment variables
         run: |
           echo "Setting DATABASE_URL environment variable..."
           echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_db" >> $GITHUB_ENV
+
       # Step 5: Apply database migrations
       - name: Run migrations
         run: |
           echo "Running migrations..."
           python manage.py migrate
+
       # Step 6: Run Django tests
       - name: Run tests
         run: |
           echo "Running test suite..."
           python manage.py test
+
   deploy:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for deployment
     needs: test  # Ensure tests pass before deploying
@@ -73,7 +78,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Heroku API key stored in GitHub Secrets
         run: |
           echo "Logging into Heroku..."
-          heroku login
+          echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+
       # Step 3: Deploy the application to Heroku
       - name: Deploy to Heroku
         run: |
