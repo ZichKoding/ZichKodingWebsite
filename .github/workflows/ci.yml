@@ -43,8 +43,15 @@ jobs:
         run: |
           echo "Installing dependencies..."
           python -m pip install --upgrade pip
-          pip install Django==4.2  # Specify a valid Django version
-          pip install -r requirements.txt
+          for package in $(cat requirements.txt); do
+            if [[ $package == Django* ]]; then
+              echo "Installing Django 4.2.18 for testing purposes..."
+              python -m pip install Django==4.2.18
+            else
+              echo "Installing $package..."
+              python -m pip install $package
+            fi
+          done
 
       # Step 4: Configure database environment variable
       - name: Set environment variables
