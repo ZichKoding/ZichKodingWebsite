@@ -75,7 +75,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = debug_or_not_to_debug
 
-ALLOWED_HOSTS = ['zichkoding-034381229be2.herokuapp.com', 'https://zichkoding-034381229be2.herokuapp.com/', '127.0.0.1', 'zichkoding.com', 'https://zichkoding.com']
+ALLOWED_HOSTS = ['zichkoding-cb24103e268e.herokuapp.com', '127.0.0.1', 'zichkoding.com']
 
 # Application definition
 
