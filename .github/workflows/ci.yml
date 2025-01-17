@@ -61,8 +61,8 @@ jobs:
         run: |
           echo "Setting environment variables for tests..."
           echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_db" >> $GITHUB_ENV
-          echo "DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
-          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "DEBUG=$DEBUG" >> $GITHUB_ENV
+          echo "SECRET_KEY=$SECRET_KEY" >> $GITHUB_ENV
 
       # Step 5: Apply database migrations
       - name: Run migrations
