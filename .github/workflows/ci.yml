@@ -11,6 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for the job
+    environment: Test  # Reference the environment with secrets
 
     services:
       postgres:
@@ -55,14 +56,11 @@ jobs:
 
       # Step 4: Configure environment variables for tests
       - name: Set environment variables
-        env:
-          DEBUG: ${{ vars.DEBUG }}  # DEBUG value from Environment Variables
-          SECRET_KEY: ${{ vars.SECRET_KEY }}  # SECRET_KEY from Environment Variables
         run: |
           echo "Setting environment variables for tests..."
           echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_db" >> $GITHUB_ENV
-          echo "DEBUG=${{ vars.DEBUG }}" >> $GITHUB_ENV
-          echo "SECRET_KEY=${{ vars.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
 
       # Step 5: Apply database migrations
       - name: Run migrations
@@ -79,6 +77,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for deployment
     needs: test  # Ensure tests pass before deploying
+    environment: Production  # Reference the environment with secrets
 
     steps:
       # Step 1: Check out the code repository
