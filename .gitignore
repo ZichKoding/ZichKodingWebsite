@@ -28,3 +28,11 @@ backup.json
 */backup.json
 ./backup.json
 /.backup.json
+db_backup.json
+*/db_backup.json
+./db_backup.json
+/.db_backup.json
+
+update_docker.sh
+./update_docker.sh
+/.update_docker.sh
