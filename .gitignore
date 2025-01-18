@@ -17,6 +17,7 @@ migrations/
 
 # Add .env file
 .env
+/.env
 */.env
 
 # DS_Store files

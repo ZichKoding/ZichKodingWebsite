@@ -11,6 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for the job
+    environment: zichkoding  # Reference the environment with secrets
 
     services:
       postgres:
@@ -18,11 +19,11 @@ jobs:
         ports:
           - 5432:5432  # Map the default PostgreSQL port
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}  # Database user from GitHub Secrets
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}  # Database password from GitHub Secrets
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}  # Database name from GitHub Secrets
+          POSTGRES_USER: postgres  # Default user for PostgreSQL
+          POSTGRES_PASSWORD: postgres  # Default password for PostgreSQL
+          POSTGRES_DB: test_db  # Default database name for PostgreSQL
         options: >-
-          --health-cmd="pg_isready -U ${{ secrets.POSTGRES_USER }}"
+          --health-cmd="pg_isready -U postgres"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -36,7 +37,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9'  # Specify Python version 3.9
+          python-version: '3.10'  # Specify Python version 3.9
 
       # Step 3: Install required dependencies
       - name: Install dependencies
@@ -45,44 +46,37 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Configure database environment variable
+      # Step 4: Configure environment variables for tests
       - name: Set environment variables
+        env:
+          DEBUG: ${{ secrets.DEBUG }}  # DEBUG value from Environment Secrets
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}  # SECRET_KEY from Environment Secrets
         run: |
-          echo "Setting DATABASE_URL environment variable..."
-          echo "DATABASE_URL=postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
+          echo "Setting environment variables for tests..."
+          echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_db" >> $GITHUB_ENV
+          echo "DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
 
       # Step 5: Apply database migrations
       - name: Run migrations
         run: |
           echo "Running migrations..."
+          python manage.py makemigrations home contact_me projects
           python manage.py migrate
 
-      # Step 6: Run Django tests
+      # Step 6: Verify database functionality
+      - name: Verify database functionality
+        run: |
+          echo "Verifying database functionality..."
+          python manage.py shell <<EOF
+          from django.db import connection
+          cursor = connection.cursor()
+          cursor.execute("SELECT COUNT(*) FROM django_migrations;")
+          print("Migrations table count:", cursor.fetchone())
+          EOF
+
+      # Step 7: Run Django tests
       - name: Run tests
         run: |
           echo "Running test suite..."
           python manage.py test
-
-  deploy:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu environment for deployment
-    needs: test  # Ensure tests pass before deploying
-
-    steps:
-      # Step 1: Check out the code repository
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Log in to Heroku using the API key
-      - name: Log in to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Heroku API key stored in GitHub Secrets
-        run: |
-          echo "Logging into Heroku..."
-          heroku login
-
-      # Step 3: Deploy the application to Heroku
-      - name: Deploy to Heroku
-        run: |
-          echo "Deploying application to Heroku..."
-          git remote add heroku https://git.heroku.com/your-app-name.git
-          git push heroku main

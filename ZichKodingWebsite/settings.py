@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import sys
 import dj_database_url
 from pathlib import Path
 
@@ -129,11 +130,18 @@ WSGI_APPLICATION = 'ZichKodingWebsite.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
+        default=os.getenv('DATABASE_URL', 'postgres://postgres:postgres@localhost:5432/postgres'),
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
+
+# Add TEST configuration for the database. 
+if 'test' in sys.argv:
+    DATABASES['default']['TEST'] = {
+        'NAME': 'test_zichkoding', 
+        'DEPENDENCIES': [], # Ensures a clean test database setup
+    }
 
 
 # Password validation
