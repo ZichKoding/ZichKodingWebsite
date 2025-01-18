@@ -103,5 +103,5 @@ jobs:
       - name: Deploy to Heroku
         run: |
           echo "Deploying application to Heroku..."
-          git remote add heroku https://git.heroku.com/your-app-name.git
+          git remote add heroku https://git.heroku.com/zichkoding.git
           git push heroku main
