@@ -80,28 +80,3 @@ jobs:
         run: |
           echo "Running test suite..."
           python manage.py test
-
-  deploy:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu environment for deployment
-    needs: test  # Ensure tests pass before deploying
-    environment: zichkoding  # Reference the environment with secrets
-
-    steps:
-      # Step 1: Check out the code repository
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Log in to Heroku using the API key
-      - name: Log in to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Heroku API key stored in GitHub Secrets
-        run: |
-          echo "Logging into Heroku..."
-          echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
-
-      # Step 3: Deploy the application to Heroku
-      - name: Deploy to Heroku
-        run: |
-          echo "Deploying application to Heroku..."
-          git remote add heroku https://git.heroku.com/zichkoding.git
-          git push heroku main
