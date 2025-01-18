@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for the job
-    environment: Test  # Reference the environment with secrets
+    environment: zichkoding  # Reference the environment with secrets
 
     services:
       postgres:
@@ -80,7 +80,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment for deployment
     needs: test  # Ensure tests pass before deploying
-    environment: Production  # Reference the environment with secrets
+    environment: zichkoding  # Reference the environment with secrets
 
     steps:
       # Step 1: Check out the code repository
