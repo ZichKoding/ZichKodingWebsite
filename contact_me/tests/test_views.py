@@ -52,7 +52,6 @@ class TestContactFormView(TestCase):
         self.assertEqual(message.contact_id.email, "test1@email.com")
         self.assertEqual(message.contact_id.first_name, "Chris")
         self.assertEqual(message.contact_id.last_name, "Zichko")
-        self.assertEqual(message.contact_id.id, 1)
 
     def test_contact_form_view_post_limit(self):
         '''

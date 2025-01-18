@@ -37,22 +37,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9'  # Specify Python version 3.9
+          python-version: '3.10'  # Specify Python version 3.9
 
       # Step 3: Install required dependencies
       - name: Install dependencies
         run: |
           echo "Installing dependencies..."
           python -m pip install --upgrade pip
-          for package in $(cat requirements.txt); do
-            if [[ $package == Django* ]]; then
-              echo "Installing Django 4.2.18 for testing purposes..."
-              python -m pip install Django==4.2.18
-            else
-              echo "Installing $package..."
-              python -m pip install $package
-            fi
-          done
+          pip install -r requirements.txt
 
       # Step 4: Configure environment variables for tests
       - name: Set environment variables
