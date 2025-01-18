@@ -69,6 +69,7 @@ jobs:
       - name: Run migrations
         run: |
           echo "Running migrations..."
+          python manage.py makemigrations
           python manage.py migrate
 
       # Step 6: Run Django tests
