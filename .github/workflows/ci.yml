@@ -72,7 +72,18 @@ jobs:
           python manage.py makemigrations home contact_me projects
           python manage.py migrate
 
-      # Step 6: Run Django tests
+      # Step 6: Verify database functionality
+      - name: Verify database functionality
+        run: |
+          echo "Verifying database functionality..."
+          python manage.py shell <<EOF
+          from django.db import connection
+          cursor = connection.cursor()
+          cursor.execute("SELECT COUNT(*) FROM django_migrations;")
+          print("Migrations table count:", cursor.fetchone())
+          EOF
+
+      # Step 7: Run Django tests
       - name: Run tests
         run: |
           echo "Running test suite..."
