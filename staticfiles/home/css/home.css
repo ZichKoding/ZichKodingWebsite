@@ -1,0 +1,19 @@
+.container {
+    padding: 20px;
+}
+
+.mission-statement, .projects, .summary {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.mission-statement h2, .projects h2, .summary h2 {
+    color: #4CAF50;
+    margin-top: 0;
+}
+
+.mission-statement p, .projects p, .summary p {
+    color: #333;
+}
