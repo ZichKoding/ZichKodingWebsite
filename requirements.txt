@@ -8,6 +8,7 @@ django-debug-toolbar==4.4.6
 django-filter==24.3
 django-mdeditor==0.1.20
 djangorestframework==3.15.2
+gunicorn==23.0.0
 Markdown==3.7
 mistune==3.1.0
 packaging==24.1
