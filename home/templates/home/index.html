@@ -4,13 +4,22 @@
 {% block title %}Home - ZichKoding{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="mission-statement my-4">
-            <h2>Mission Statement</h2>
-            <p>{{ mission_statement.mission_statement }}</p>
+    <div class="container w-100">
+        <div class="row justify-content-between d-flex flex-column flex-md-row">
+            <div class="col-md-3">
+                <h2>Summary</h2>
+                <p>{{ summary.content }}</p>
+            </div>
+            <div class="col-md-2 align-items-center">
+                <h2 class="text-center">Mission Statement</h2>
+                <p class="text-center">{{ mission_statement.mission_statement }}</p>
+            </div>
+            <div class="col-md-3 text-end">
+                <h2>Projects</h2>
+                <p>The purpose of the projects section goes here.</p>
+            </div>
         </div>
-        <div class="projects my-4">
-            <h2>Projects</h2>
+        <div class="my-4">
             <div class="row">
                 {% for project in projects %}
                     <div class="col-md-4 mb-4">
@@ -29,10 +38,6 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
-        <div class="summary my-4">
-            <h2>Summary</h2>
-            <p>{{ summary.content }}</p>
         </div>
     </div>
 {% endblock %}
