@@ -3,18 +3,26 @@
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
     --accent-color: #e74c3c;
-    --background-color: #f8f9fa;
+    --background-color: #003d7a;
     --card-background: #ffffff;
     --text-color: #2c3e50;
     --text-muted: #7f8c8d;
 }
 
 /* Base Styles */
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    font-family: 'Roboto', sans-serif;
-}
+/* body { */
+    /* background-color: var(--background-color); */
+    /* color: var(--text-color);
+    font-family: 'Roboto', sans-serif; */
+    /*  */
+    /* background: linear-gradient(to bottom right, #87CEEB, #1E90FF); Adjust colors */
+    /* height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; Ensure it's behind all content */
+/* } */
 
 /* Card Styling */
 .card {
