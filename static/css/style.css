@@ -10,7 +10,7 @@
 
 /* 768 px is the smallest before using the .custom-shadow */
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .custom-shadow {
         box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.5); /* Adjust values for size and blur */
         margin: 1rem 0; /* Adjust the margin to fit the shadow */
