@@ -12,22 +12,24 @@
 </head>
 <body class="bg-dark text-light">
 <!-- <body class="bg-dark shadow-text-sm-white"> -->
-    <header>
-        <!-- Navigation -->
-        {% include 'includes/header.html' %}
-    </header>
+    <div class="d-flex flex-column min-vh-100">
+        <header>
+            <!-- Navigation -->
+            {% include 'includes/header.html' %}
+        </header>
 
-    <main>
-        <!-- Main Content -->
-        <div class="container my-5">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+        <main class="flex-grow-1 py-5">
+            <!-- Main Content -->
+            <div class="container my-5">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
 
-    <footer>
-        <!-- Footer content -->
-        {% include 'includes/footer.html' %}
-    </footer>
+        <footer class="mt-auto">
+            <!-- Footer content -->
+            {% include 'includes/footer.html' %}
+        </footer>
+    </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
