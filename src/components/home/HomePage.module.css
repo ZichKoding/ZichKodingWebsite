@@ -1,0 +1,105 @@
+/* Section positioning */
+.section {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+.sectionHidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.sectionVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Transition animations (800ms each) */
+.exitUp {
+  animation: exitUp 800ms ease-in-out forwards;
+}
+
+.exitDown {
+  animation: exitDown 800ms ease-in-out forwards;
+}
+
+.enterFromBelow {
+  animation: enterFromBelow 800ms ease-in-out forwards;
+}
+
+.enterFromAbove {
+  animation: enterFromAbove 800ms ease-in-out forwards;
+}
+
+@keyframes exitUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes exitDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes enterFromBelow {
+  from {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes enterFromAbove {
+  from {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* About auto-load entrance */
+.fadeSlideIn {
+  animation: fadeSlideIn 800ms ease-out forwards;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .exitUp,
+  .exitDown,
+  .enterFromBelow,
+  .enterFromAbove,
+  .fadeSlideIn {
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -1,39 +1,41 @@
-venv/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Add Create Github Repo script
-create_github_repo.sh
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Add all __pycache__ directories
-__pycache__/
-*/__pycache__/
+# testing
+/coverage
 
-# Add db.sqlite3
-db.sqlite3
-*/db.sqlite3
+# next.js
+/.next/
+/out/
 
-# Add all migrations folders
-*/migrations/
-migrations/
+# production
+/build
 
-# Add .env file
-.env
-/.env
-*/.env
-
-# DS_Store files
+# misc
 .DS_Store
-*/.DS_Store
+*.pem
 
-# Backup files
-backup.json
-*/backup.json
-./backup.json
-/.backup.json
-db_backup.json
-*/db_backup.json
-./db_backup.json
-/.db_backup.json
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-update_docker.sh
-./update_docker.sh
-/.update_docker.sh
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
