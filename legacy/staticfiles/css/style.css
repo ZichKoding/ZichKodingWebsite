@@ -1,9 +1,0 @@
-.nav-hidden {
-    transform: translateY(-100%); /* Move the navbar out of view */
-    transition: transform 0.3s ease-in-out;
-}
-
-.nav-visible {
-    transform: translateY(0); /* Make the navbar fully visible */
-    transition: transform 0.3s ease-in-out;
-}

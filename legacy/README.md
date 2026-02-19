@@ -1,5 +1,0 @@
-# ZichKodingWebsite
-
-#
-#
-Making slight change.
