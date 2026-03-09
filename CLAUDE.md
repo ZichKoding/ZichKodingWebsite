@@ -88,14 +88,13 @@ src/
 │   ├── supabase/
 │   │   ├── client.ts           # Browser Supabase client (createClient)
 │   │   ├── server.ts           # Server Supabase client (cookies-based)
-│   │   ├── proxy.ts             # Auth proxy for middleware
+│   │   ├── proxy.ts             # Auth session refresh proxy (replaces middleware in Next.js 16)
 │   │   └── types.ts            # Database TypeScript types
 │   ├── auth/
 │   │   └── admin.ts            # Admin route auth helper
 │   ├── validations/            # Zod schemas (post, contact, project, etc.)
 │   ├── test-utils/             # Supabase mock factory for tests
 │   └── utils.ts                # formatDate, cn, truncate, generateGradient
-└── middleware.ts               # Protects /admin/* routes, refreshes auth
 ```
 
 ## Architecture Decisions
@@ -105,7 +104,7 @@ src/
 - **URL-based state**: Blog search, filters, pagination all stored in URL params for SSR + bookmarking
 - **Tiptap JSON storage**: Blog content stored as JSONB in Supabase, rendered client-side with `generateHTML`
 - **RLS Policies**: All tables have Row-Level Security; public tables readable by `anon`, mutations require `authenticated`
-- **Middleware auth**: `/admin/*` routes redirect to `/login` if no session
+- **Auth proxy**: `proxy.ts` handles session refresh (Next.js 16 pattern, replaces traditional middleware); admin layout server-side check redirects to `/login` if no session
 - **Tailwind CSS 4**: Uses `@tailwindcss/postcss` — no `tailwind.config.ts`, theme customization via `@theme` directives in `globals.css`
 
 ## Database

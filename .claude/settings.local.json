@@ -4,7 +4,10 @@
       "mcp__MCP_DOCKER__browser_navigate",
       "Bash(npm run build:*)",
       "mcp__MCP_DOCKER__browser_take_screenshot",
-      "mcp__MCP_DOCKER__browser_evaluate"
+      "mcp__MCP_DOCKER__browser_evaluate",
+      "Bash(cat:*)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs"
     ]
   }
 }

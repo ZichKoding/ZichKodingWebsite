@@ -365,11 +365,11 @@ CREATE TRIGGER contact_messages_updated_at_trigger
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO profiles (id, email, full_name, created_at, updated_at)
+    INSERT INTO public.profiles (id, email, full_name, created_at, updated_at)
     VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'full_name', now(), now());
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- Trigger for new user signup
 CREATE TRIGGER on_auth_user_created
