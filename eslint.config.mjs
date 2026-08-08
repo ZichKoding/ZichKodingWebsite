@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored worktree copies (parallels the vitest exclude).
+    ".claude/**",
+    "**/worktrees/**",
   ]),
 ]);
 
