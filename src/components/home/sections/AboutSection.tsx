@@ -2,19 +2,19 @@
 
 import React from 'react';
 import { TERMINAL_DATA } from '@/data/terminal-data';
-import { GraduationCap, Shield, Server, Bot } from 'lucide-react';
+import { GraduationCap, Shield, Server, Briefcase } from 'lucide-react';
 
 interface AboutSectionProps {
   isActive: boolean;
 }
 
-const TAGLINE = 'IT Lead & AI-Augmented Software Engineer';
+const TAGLINE = 'Developer & Technology Manager | AI Systems Builder';
 
 const highlights = [
-  { icon: GraduationCap, label: 'UCF Certified Full-Stack Developer' },
+  { icon: Server, label: 'Developer & Technology Manager @ ARA' },
   { icon: Shield, label: 'U.S. Marine Corps Veteran' },
-  { icon: Server, label: 'Production Systems Owner' },
-  { icon: Bot, label: 'AI-Augmented Engineering' },
+  { icon: Briefcase, label: 'Freelance via ZichKoding since 2021' },
+  { icon: GraduationCap, label: 'UCF Certified Full-Stack Developer' },
 ];
 
 export function AboutSection({ isActive }: AboutSectionProps) {

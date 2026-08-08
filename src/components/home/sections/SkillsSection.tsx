@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TERMINAL_DATA } from '@/data/terminal-data';
-import { Code2, Bot, Server, ClipboardCheck, Wrench } from 'lucide-react';
+import { Code2, Bot, Cloud, ClipboardCheck, Wrench } from 'lucide-react';
 
 interface SkillsSectionProps {
   isActive: boolean;
@@ -11,8 +11,8 @@ interface SkillsSectionProps {
 const categoryIcons: Record<string, React.ElementType> = {
   'Languages & Frameworks': Code2,
   'AI Engineering': Bot,
-  'Platform & Ops': Server,
-  Practices: ClipboardCheck,
+  'Cloud & Integrations': Cloud,
+  'Practices & Ops': ClipboardCheck,
 };
 
 export function SkillsSection({ isActive }: SkillsSectionProps) {

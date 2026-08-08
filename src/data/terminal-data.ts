@@ -32,31 +32,65 @@ export const TERMINAL_DATA = {
   career: [
     {
       company: 'American Recovery Association',
-      role: 'IT Lead',
-      period: 'Present',
+      role: 'Developer & Technology Manager',
+      period: 'Jul 2024 – Present',
       description:
-        'Sole IT owner for a national trade association: maintaining and modernizing a production compliance platform (PHP/Zend), integrating vendor APIs, running staged production data migrations, and coordinating outside contractors.',
+        "Sole in-house technology professional for the recovery industry's largest professional association: own the production compliance platform (PHP/Zend), cut platform load times from 5–30 minutes to under 5 seconds, integrated Zoho CRM with compliance monitoring, and established a bi-weekly release cadence with outside contractors.",
     },
     {
-      company: 'Independent / Open Source',
-      role: 'AI Systems Builder',
-      period: 'Ongoing',
+      company: 'Melken Solutions',
+      role: 'Logistics Technician / Software Engineer',
+      period: 'Dec 2023 – Jul 2024',
       description:
-        'Building local-first AI systems — the Senku terminal agent (Rust), the Shenron Android companion (Kotlin), and persistent-memory tooling — while working toward independent software work.',
+        'Logistics for concurrent electronics projects — disassembly/assembly, inventory control, technical documentation — plus maintenance and project management of custom-built software.',
+    },
+    {
+      company: 'Frontline Insurance / OpenHouse',
+      role: 'Full Stack Cloud Developer',
+      period: 'May 2022 – Nov 2023',
+      description:
+        'Zoho CRM data analysis and integration, Talkdesk integration, ETL pipelines, and kicking off a WordPress-to-Next.js migration for sales and marketing.',
     },
     {
       company: 'University of Central Florida',
       role: 'Full-Stack Web Development Certificate',
-      period: 'Milestone',
+      period: 'Aug 2021 – Feb 2022',
       description:
-        'Formal full-stack training: JavaScript, React, Node, databases, and the foundations this portfolio is built on.',
+        'Formal full-stack training: JavaScript, React, Node, databases, and the foundations this site is built on.',
+    },
+    {
+      company: 'Edpresso | Educative',
+      role: 'Technical Writer',
+      period: 'May 2021 – May 2022',
+      description:
+        "Interactive technical documentation for Python modules — recognized as a top contributor and featured on the platform's podcast.",
+    },
+    {
+      company: 'ZichKoding',
+      role: 'Founder / Software Engineer',
+      period: 'Feb 2021 – Present',
+      description:
+        'My own consultancy: websites, progressive web apps, custom electronics and software for R&D projects, plus consulting and tutoring.',
+    },
+    {
+      company: 'FreeCodeCamp',
+      role: 'Scientific Computing with Python Certificate',
+      period: 'Aug 2020 – Feb 2021',
+      description: 'First formal programming credential.',
+    },
+    {
+      company: 'NRT Methodologies — Cape Canaveral SFS',
+      role: 'Lead Plant Operator',
+      period: 'Oct 2019 – Apr 2022',
+      description:
+        'Ran chemical synthesis skids with SCADA systems at Cape Canaveral Space Force Station, including a stretch as temporary site manager. Where the space theme on this site comes from.',
     },
     {
       company: 'United States Marine Corps',
-      role: 'Service',
-      period: 'Earlier',
+      role: 'NCO / Squad Leader / Combat Engineer',
+      period: 'Jan 2015 – Jan 2021',
       description:
-        'Where the crawl-walk-run discipline comes from: prove it safe, run it small, then widen. It still governs how I ship production changes today.',
+        'Led and trained Marines in combat engineering — design, construction, maintenance, and demolition. Where the crawl-walk-run discipline that still governs how I ship production changes comes from.',
     },
   ],
 
@@ -64,25 +98,29 @@ export const TERMINAL_DATA = {
 ║              CHRIS ZICHKO — DEVELOPER PROFILE                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-IT Lead & AI-Augmented Software Engineer
+Developer & Technology Manager | AI Systems Builder
 
-I run IT for the American Recovery Association, a national trade
-association — maintaining and modernizing a production compliance
-platform, integrating vendor APIs, and running staged data migrations
-on systems businesses depend on daily.
+By day I'm the sole in-house technology professional at the American
+Recovery Association — the recovery industry's largest professional
+association — where I own a production compliance platform (PHP/Zend),
+integrate vendor and CRM systems, and run staged data migrations on
+systems businesses depend on daily.
 
-Outside the day job I build AI systems that run close to the metal:
-a Rust terminal agent (Senku), an offline Android AI companion
-(Shenron), and the persistent-memory tooling my own AI-assisted
-workflow runs on.
+Through ZichKoding, my own consultancy since 2021, I build websites,
+PWAs, and custom software for clients. My current focus is AI systems
+that run close to the metal: a Rust terminal agent (Senku), an offline
+Android AI companion (Shenron), and the persistent-memory tooling my
+own AI-assisted workflow runs on.
 
-U.S. Marine Corps background. UCF-certified full-stack developer.
-Space and quantum-physics enthusiast, based in Florida.
+Before software: U.S. Marine Corps NCO and Combat Engineer, then plant
+operations at Cape Canaveral Space Force Station — which is where the
+space obsession on this site comes from. UCF-certified full-stack
+developer, based in Florida.
 
-✦ UCF Certified Full-Stack Web Developer
-✦ U.S. Marine Corps veteran — crawl, walk, run
-✦ Production systems owner: PHP/Zend, MySQL, Docker
-✦ Local-first AI: Ollama, LiteRT-LM, agent harnesses`,
+✦ Developer & Technology Manager @ ARA
+✦ U.S. Marine Corps veteran — NCO, Combat Engineer
+✦ Freelance & consulting via ZichKoding since 2021
+✦ UCF Certified Full-Stack Web Developer`,
 
   contactInfo: `╔════════════════════════════════════════════════════════════════╗
 ║                    CONTACT INFORMATION                         ║

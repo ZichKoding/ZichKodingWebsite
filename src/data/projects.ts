@@ -16,9 +16,8 @@ export const PROJECTS: StaticProject[] = [
   {
     title: 'Senku',
     description:
-      'Terminal AI agent harness written in Rust. Runs local models through Ollama alongside cloud models, with slash commands and session context management. Open source, with external contributors landing PRs.',
+      'Terminal AI agent harness written in Rust. Runs local models through Ollama alongside cloud models, with slash commands and session context management. In active development with outside contributors — currently a private beta.',
     tech_stack: ['Rust', 'Ollama', 'LLM tool-calling', 'CLI'],
-    github_url: 'https://github.com/ZichKoding/senku',
     featured: true,
     display_order: 0,
   },
@@ -33,7 +32,7 @@ export const PROJECTS: StaticProject[] = [
   {
     title: 'ARA Compliance Platform',
     description:
-      'Professional work: maintaining and modernizing a production compliance platform for a national trade association — vendor background-check API integrations, staged production data migrations, and a Dockerized PHPUnit harness that brought TDD to a legacy PHP codebase.',
+      "Professional work: owning a production compliance platform for the recovery industry's largest professional association — platform load times cut from minutes to seconds, vendor background-check API integrations, staged production data migrations, and a Dockerized PHPUnit harness that brought TDD to a legacy PHP codebase.",
     tech_stack: ['PHP', 'Zend Framework', 'MySQL', 'Docker'],
     featured: true,
     display_order: 2,

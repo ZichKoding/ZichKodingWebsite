@@ -15,24 +15,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://zichkoding.com"),
   title: {
-    default: "ZichKoding | Chris Zichko - Software Engineer & AI Systems Builder",
+    default: "ZichKoding | Chris Zichko - Developer & Technology Manager",
     template: "%s | ZichKoding",
   },
   description:
-    "Portfolio of Chris Zichko: UCF-certified full-stack developer, production systems owner, and builder of local-first AI tools.",
+    "Portfolio of Chris Zichko: Developer & Technology Manager, UCF-certified full-stack developer, U.S. Marine Corps veteran, and builder of local-first AI tools.",
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "ZichKoding",
-    title: "ZichKoding | Chris Zichko - Software Engineer & AI Systems Builder",
+    title: "ZichKoding | Chris Zichko - Developer & Technology Manager",
     description:
-      "Portfolio of Chris Zichko: UCF-certified full-stack developer, production systems owner, and builder of local-first AI tools.",
+      "Portfolio of Chris Zichko: Developer & Technology Manager, UCF-certified full-stack developer, U.S. Marine Corps veteran, and builder of local-first AI tools.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ZichKoding | Chris Zichko - Software Engineer & AI Systems Builder",
+    title: "ZichKoding | Chris Zichko - Developer & Technology Manager",
     description:
-      "Portfolio of Chris Zichko: UCF-certified full-stack developer, production systems owner, and builder of local-first AI tools.",
+      "Portfolio of Chris Zichko: Developer & Technology Manager, UCF-certified full-stack developer, U.S. Marine Corps veteran, and builder of local-first AI tools.",
   },
   robots: {
     index: true,

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Starfield } from './Starfield';
 import { SectionDots } from './SectionDots';
 import { AboutSection } from './sections/AboutSection';
 import { HowIWorkSection } from './sections/HowIWorkSection';
@@ -247,10 +246,7 @@ export function HomePage() {
       className="relative w-full flex-1 overflow-hidden"
       style={{ height: 'calc(100vh - 4rem)' }}
     >
-      {/* Starfield Background */}
-      <Starfield ref={ctx.starfieldRef} />
-
-      {/* Sections */}
+      {/* Sections (starfield background is rendered site-wide by the layout) */}
       <div className="absolute inset-0 z-10">
         {sectionComponents.map((component, idx) => (
           <div

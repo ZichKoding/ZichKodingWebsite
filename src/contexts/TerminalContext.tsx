@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useCallback, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTerminal, TerminalLine } from '@/hooks/useTerminal';
-import { StarfieldHandle } from '@/components/home/Starfield';
+import { Starfield, StarfieldHandle } from '@/components/home/Starfield';
 
 export interface RecentPost {
   slug: string;
@@ -131,6 +131,10 @@ export function TerminalProvider({
         clearPendingSectionScroll,
       }}
     >
+      {/* Site-wide animated starfield (fixed, z-0, honors prefers-reduced-motion).
+          Rendered here, where the warp ref lives, so terminal warp navigation
+          animates it on every public page. */}
+      <Starfield ref={starfieldRef} />
       {children}
     </TerminalContext.Provider>
   );

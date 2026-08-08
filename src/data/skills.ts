@@ -1,6 +1,6 @@
-// Real skill inventory. Deliberately no proficiency percentages — the previous
-// numbers were invented, and a named project or production context says more
-// than a made-up bar chart ever could.
+// Real skill inventory, cross-checked against Chris's resumes (2026-08).
+// Deliberately no proficiency percentages — a named project or production
+// context says more than a made-up bar chart ever could.
 
 export interface SkillItem {
   name: string;
@@ -17,10 +17,10 @@ export const SKILLS: SkillCategory[] = [
     category: 'Languages & Frameworks',
     items: [
       { name: 'PHP / Zend Framework', note: 'legacy production, daily' },
-      { name: 'TypeScript / React / Next.js', note: 'this site + app work' },
+      { name: 'TypeScript / React / Next.js', note: 'this site + client work' },
+      { name: 'Python', note: 'Django, Flask, Pandas' },
       { name: 'Rust', note: 'Senku agent harness' },
       { name: 'Kotlin / Android', note: 'Shenron companion app' },
-      { name: 'Python', note: 'CLI tooling' },
       { name: 'SQL (MySQL / Postgres)', note: 'production migrations' },
     ],
   },
@@ -35,22 +35,23 @@ export const SKILLS: SkillCategory[] = [
     ],
   },
   {
-    category: 'Platform & Ops',
+    category: 'Cloud & Integrations',
     items: [
-      { name: 'Docker', note: 'test harnesses & envs' },
-      { name: 'Linux servers & SSH tooling' },
-      { name: 'Windows automation', note: 'pywin32, PowerShell' },
-      { name: 'Git — GitHub & Bitbucket' },
+      { name: 'AWS', note: 'Lambda, S3, API Gateway, SQS' },
+      { name: 'Zoho ecosystem', note: 'CRM, Projects, integrations' },
+      { name: 'ETL pipelines' },
+      { name: 'WordPress', note: 'builds & CRM integrations' },
       { name: 'Vercel / static deploys' },
     ],
   },
   {
-    category: 'Practices',
+    category: 'Practices & Ops',
     items: [
       { name: 'Test-driven development', note: 'PHPUnit, Vitest' },
       { name: 'Red-team plan review' },
       { name: 'Crawl-walk-run rollouts', note: 'staged, reversible' },
-      { name: 'Verification-first debugging' },
+      { name: 'Docker', note: 'test harnesses & envs' },
+      { name: 'Linux servers & Windows automation' },
       { name: 'Small single-purpose PRs' },
     ],
   },
