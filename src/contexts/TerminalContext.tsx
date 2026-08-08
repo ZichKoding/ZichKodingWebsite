@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useCallback, useRef, useState } from 'react';
+import React, { createContext, useContext, useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTerminal, TerminalLine } from '@/hooks/useTerminal';
 import { StarfieldHandle } from '@/components/home/Starfield';
@@ -50,8 +50,19 @@ export function TerminalProvider({
   const pathname = usePathname();
   const router = useRouter();
   const isOnHomepage = pathname === '/';
-  const [isMinimized, setIsMinimized] = useState(false);
+  // Expanded on the home page (it IS the home experience); minimized elsewhere
+  // so it never covers page content on a direct load of /blog, /projects, etc.
+  const [isMinimized, setIsMinimized] = useState(pathname !== '/');
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      setIsMinimized(true);
+    }
+  }, [pathname]);
   const [isInitialized, setIsInitialized] = useState(false);
+  // Ref guard: state updates don't flush fast enough to stop React 19
+  // StrictMode's double-effect from initializing twice.
+  const hasInitializedRef = useRef(false);
   const [pendingSectionScroll, setPendingSectionScroll] = useState<string | null>(null);
   const starfieldRef = useRef<StarfieldHandle>(null);
 
@@ -85,11 +96,12 @@ export function TerminalProvider({
   );
 
   const wrappedInitialize = useCallback(() => {
-    if (!isInitialized) {
+    if (!hasInitializedRef.current) {
+      hasInitializedRef.current = true;
       terminal.initializeTerminal();
       setIsInitialized(true);
     }
-  }, [isInitialized, terminal]);
+  }, [terminal]);
 
   const minimize = useCallback(() => setIsMinimized(true), []);
   const expand = useCallback(() => setIsMinimized(false), []);
