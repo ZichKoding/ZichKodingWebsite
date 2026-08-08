@@ -1,38 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { updateSession } from '@/lib/supabase/proxy';
 
-export async function proxy(request: NextRequest) {
-  const response = await updateSession(request);
-
-  // Protect admin routes
-  const pathname = request.nextUrl.pathname;
-
-  if (pathname.startsWith('/admin')) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (!supabaseUrl || !supabaseAnonKey) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-
-    // Use the Supabase client to check for a valid user session
-    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-      },
-    });
-
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-  }
-
-  return response;
+// Static-first migration (PR-A): the Supabase backend is gone, so the previous
+// per-request session refresh + admin gate would hit a dead host on every request.
+// This file is deleted entirely in PR-B along with the admin surface.
+export async function proxy(_request: NextRequest) {
+  return NextResponse.next();
 }
 
 export const config = {
