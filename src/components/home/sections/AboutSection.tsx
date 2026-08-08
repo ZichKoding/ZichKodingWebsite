@@ -2,25 +2,32 @@
 
 import React from 'react';
 import { TERMINAL_DATA } from '@/data/terminal-data';
-import { Rocket, GraduationCap, Users, Code2 } from 'lucide-react';
+import { GraduationCap, Shield, Server, Bot } from 'lucide-react';
 
 interface AboutSectionProps {
   isActive: boolean;
 }
 
+const TAGLINE = 'IT Lead & AI-Augmented Software Engineer';
+
 const highlights = [
   { icon: GraduationCap, label: 'UCF Certified Full-Stack Developer' },
-  { icon: Rocket, label: '6+ Years Professional Experience' },
-  { icon: Users, label: 'Technical Leadership & Mentoring' },
-  { icon: Code2, label: 'Clean Code & Performance Focused' },
+  { icon: Shield, label: 'U.S. Marine Corps Veteran' },
+  { icon: Server, label: 'Production Systems Owner' },
+  { icon: Bot, label: 'AI-Augmented Engineering' },
 ];
 
 export function AboutSection({ isActive }: AboutSectionProps) {
   // Parse bio from the about text
   const lines = TERMINAL_DATA.about.split('\n').filter((l) => l.trim());
-  // Skip the box border lines, grab the core text
+  // Skip the box border lines and the tagline (shown as the subtitle already)
   const bioLines = lines.filter(
-    (l) => !l.startsWith('╔') && !l.startsWith('╚') && !l.startsWith('║') && !l.startsWith('✦')
+    (l) =>
+      !l.startsWith('╔') &&
+      !l.startsWith('╚') &&
+      !l.startsWith('║') &&
+      !l.startsWith('✦') &&
+      l.trim() !== TAGLINE
   );
 
   return (
@@ -30,12 +37,10 @@ export function AboutSection({ isActive }: AboutSectionProps) {
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Chris
+              Chris Zichko
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 mb-6">
-            Lead Developer & Technology Manager
-          </p>
+          <p className="text-lg sm:text-xl text-gray-400 mb-6">{TAGLINE}</p>
 
           {/* Bio */}
           <div className="space-y-3 mb-8">

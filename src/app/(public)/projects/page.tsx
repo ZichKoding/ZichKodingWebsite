@@ -1,28 +1,17 @@
 import { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { PROJECTS } from '@/data/projects';
 import { ProjectCard } from '@/components/public/ProjectCard';
 
 export const metadata: Metadata = {
-  title: 'Projects - Chris | ZichKoding',
-  description: 'Explore my latest projects and work',
+  title: 'Projects - Chris Zichko | ZichKoding',
+  description:
+    'Real projects: a Rust terminal AI agent, an offline Android AI companion, persistent-memory tooling, and production compliance-platform work.',
 };
 
-export default async function ProjectsPage() {
-  const supabase = await createClient();
-
-  // Fetch projects ordered by display_order
-  const { data: projects, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('display_order', { ascending: true });
-
-  if (error) {
-    console.error('Error fetching projects:', error);
-  }
-
-  // Separate featured and regular projects
-  const featuredProjects = (projects || []).filter((p) => p.featured);
-  const regularProjects = (projects || []).filter((p) => !p.featured);
+export default function ProjectsPage() {
+  const projects = [...PROJECTS].sort((a, b) => a.display_order - b.display_order);
+  const featuredProjects = projects.filter((p) => p.featured);
+  const regularProjects = projects.filter((p) => !p.featured);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -42,13 +31,13 @@ export default async function ProjectsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featuredProjects.map((project) => (
                 <ProjectCard
-                  key={project.id}
+                  key={project.title}
                   title={project.title}
                   description={project.description}
                   tech_stack={project.tech_stack}
-                  image_url={project.image_url}
-                  live_url={project.live_url}
-                  github_url={project.github_url}
+                  image_url={project.image_url ?? null}
+                  live_url={project.live_url ?? null}
+                  github_url={project.github_url ?? null}
                   featured={true}
                 />
               ))}
@@ -65,25 +54,18 @@ export default async function ProjectsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {regularProjects.map((project) => (
                 <ProjectCard
-                  key={project.id}
+                  key={project.title}
                   title={project.title}
                   description={project.description}
                   tech_stack={project.tech_stack}
-                  image_url={project.image_url}
-                  live_url={project.live_url}
-                  github_url={project.github_url}
+                  image_url={project.image_url ?? null}
+                  live_url={project.live_url ?? null}
+                  github_url={project.github_url ?? null}
                   featured={false}
                 />
               ))}
             </div>
           </section>
-        )}
-
-        {/* Empty State */}
-        {projects && projects.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-400 mb-4">No projects available yet.</p>
-          </div>
         )}
       </div>
     </div>

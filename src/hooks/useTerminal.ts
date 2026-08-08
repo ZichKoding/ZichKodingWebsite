@@ -1,7 +1,14 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { TERMINAL_DATA, COMMANDS } from '@/data/terminal-data';
+import type { SkillItem } from '@/data/skills';
 
 export type TerminalLineType = 'input' | 'output' | 'error' | 'success' | 'skill' | 'project' | 'career' | 'progress';
+
+export interface RecentPost {
+  slug: string;
+  title: string;
+  date: string;
+}
 
 export interface TerminalLine {
   id: string;
@@ -9,20 +16,22 @@ export interface TerminalLine {
   type: TerminalLineType;
   timestamp: number;
   data?: {
-    skill?: { name: string; proficiency: number };
+    skill?: SkillItem;
     project?: typeof TERMINAL_DATA.projects[0];
     career?: typeof TERMINAL_DATA.career[0];
     progress?: number;
   };
 }
 
-const generateSkillBar = (proficiency: number): string => {
-  const filledLength = Math.round((proficiency / 100) * 20);
-  const emptyLength = 20 - filledLength;
-  return `[${Array(filledLength).fill('█').join('')}${Array(emptyLength).fill('░').join('')}] ${proficiency}%`;
-};
+const formatSkill = (item: SkillItem): string =>
+  item.note ? `${item.name} — ${item.note}` : item.name;
 
-export const useTerminal = (onNavigate?: (path: string) => void, onWarpNavigate?: (path: string) => void, onSectionScroll?: (section: string) => void) => {
+export const useTerminal = (
+  onNavigate?: (path: string) => void,
+  onWarpNavigate?: (path: string) => void,
+  onSectionScroll?: (section: string) => void,
+  recentPosts: RecentPost[] = []
+) => {
   const [output, setOutput] = useState<TerminalLine[]>([]);
   const [currentInput, setCurrentInput] = useState('');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -94,12 +103,11 @@ export const useTerminal = (onNavigate?: (path: string) => void, onWarpNavigate?
           addLine('Loading skills...', 'success');
           addLine('', 'output');
 
-          Object.entries(TERMINAL_DATA.skills).forEach(([category, skills]) => {
+          TERMINAL_DATA.skills.forEach(({ category, items }) => {
             addLine(`\n${category.toUpperCase()}`, 'success');
             addLine('─'.repeat(50), 'output');
-            skills.forEach((skill) => {
-              const bar = generateSkillBar(skill.proficiency);
-              addLine(`${skill.name.padEnd(20)} ${bar}`, 'skill', { skill });
+            items.forEach((skill) => {
+              addLine(`  • ${formatSkill(skill)}`, 'skill', { skill });
             });
           });
           onSectionScroll?.('skills');
@@ -141,40 +149,30 @@ export const useTerminal = (onNavigate?: (path: string) => void, onWarpNavigate?
         }
 
         case 'resume': {
-          addLine('Initializing resume download...', 'output');
-          addLine('', 'output');
-
-          // Simulate progress
-          let progress = 0;
-          const progressInterval = setInterval(() => {
-            progress += Math.random() * 30;
-            if (progress > 100) progress = 100;
-
-            addLine(
-              `Downloading... [${generateSkillBar(Math.round(progress))}]`,
-              'progress',
-              { progress: Math.round(progress) }
-            );
-
-            if (progress >= 100) {
-              clearInterval(progressInterval);
-              addLine('', 'output');
-              addLine('✓ Resume ready for download', 'success');
-              addLine('📄 chris-portfolio-resume.pdf', 'output');
-              addLine('→ Download link: /resume.pdf', 'output');
-            }
-          }, 300);
+          if (TERMINAL_DATA.resumeAvailable) {
+            addLine('✓ Resume ready for download', 'success');
+            addLine('📄 chris-zichko-resume.pdf', 'output');
+            addLine('→ Download link: /resume.pdf', 'output');
+          } else {
+            addLine('Resume available on request.', 'output');
+            addLine('→ LinkedIn: linkedin.com/in/chris-zichko-264b25217/', 'output');
+            addLine('→ Or use: cd contact', 'success');
+          }
           break;
         }
 
         case 'blog': {
           addLine('Recent Blog Posts', 'success');
           addLine('═'.repeat(50), 'output');
-          TERMINAL_DATA.blogPosts.forEach((post, idx) => {
-            addLine(`\n[${idx + 1}] ${post.title}`, 'output');
-            addLine(`    Published: ${post.date}`, 'output');
-            addLine(`    Link: /blog/${post.slug}`, 'output');
-          });
+          if (recentPosts.length === 0) {
+            addLine('\nNo posts published yet — check back soon.', 'output');
+          } else {
+            recentPosts.forEach((post, idx) => {
+              addLine(`\n[${idx + 1}] ${post.title}`, 'output');
+              addLine(`    Published: ${post.date}`, 'output');
+              addLine(`    Link: /blog/${post.slug}`, 'output');
+            });
+          }
           addLine('\n→ View all posts at /blog', 'success');
           onSectionScroll?.('blog');
           break;
@@ -271,14 +269,13 @@ export const useTerminal = (onNavigate?: (path: string) => void, onWarpNavigate?
           addLine('Your skills are in superposition!', 'output');
           addLine('Collapsing wave function...\n', 'output');
 
-          const allSkills: Array<{ name: string; proficiency: number }> = [];
-          Object.values(TERMINAL_DATA.skills).forEach((categorySkills) => {
-            allSkills.push(...categorySkills);
-          });
+          const allSkills: SkillItem[] = TERMINAL_DATA.skills.flatMap(
+            (category) => category.items
+          );
 
           allSkills.sort(() => Math.random() - 0.5).slice(0, 8).forEach((skill, idx) => {
             setTimeout(() => {
-              addLine(`✦ ${skill.name} (${skill.proficiency}%)`, 'success');
+              addLine(`✦ ${formatSkill(skill)}`, 'success');
             }, idx * 150);
           });
           break;
@@ -289,7 +286,7 @@ export const useTerminal = (onNavigate?: (path: string) => void, onWarpNavigate?
         }
       }
     },
-    [addInputLine, addLine, onNavigate, onWarpNavigate, onSectionScroll]
+    [addInputLine, addLine, onNavigate, onWarpNavigate, onSectionScroll, recentPosts]
   );
 
   const handleKeyDown = useCallback(

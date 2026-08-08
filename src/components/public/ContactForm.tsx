@@ -11,6 +11,8 @@ export function ContactForm() {
     subject: '',
     message: '',
   });
+  // Honeypot: humans never see or fill this; bots that do get silently dropped.
+  const [website, setWebsite] = useState('');
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,7 +66,7 @@ export function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(validation.data),
+        body: JSON.stringify({ ...validation.data, website }),
       });
 
       if (!response.ok) {
@@ -115,6 +117,20 @@ export function ContactForm() {
           <p className="text-red-200 text-sm">{errors.submit}</p>
         </div>
       )}
+
+      {/* Honeypot — visually hidden and skipped by tab order */}
+      <div className="absolute -left-[9999px] top-auto" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       {/* Name Field */}
       <div>

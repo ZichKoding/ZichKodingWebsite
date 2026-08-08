@@ -1,15 +1,17 @@
 'use client';
 
 import React from 'react';
-import { TERMINAL_DATA } from '@/data/terminal-data';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
+import { useTerminalContext } from '@/contexts/TerminalContext';
+import { formatDate } from '@/lib/utils';
 
 interface BlogSectionProps {
   isActive: boolean;
 }
 
 export function BlogSection({ isActive }: BlogSectionProps) {
+  const { recentPosts } = useTerminalContext();
   return (
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-3xl w-full mx-auto my-auto">
@@ -20,7 +22,12 @@ export function BlogSection({ isActive }: BlogSectionProps) {
         </h2>
 
         <div className="space-y-4 mb-8">
-          {TERMINAL_DATA.blogPosts.map((post, idx) => (
+          {recentPosts.length === 0 && (
+            <p className="text-center text-sm text-gray-500">
+              No posts published yet — check back soon.
+            </p>
+          )}
+          {recentPosts.map((post, idx) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
@@ -39,7 +46,9 @@ export function BlogSection({ isActive }: BlogSectionProps) {
                   <h3 className="text-base font-semibold text-gray-100 group-hover:text-amber-300 transition-colors mb-1 truncate">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-gray-500">{post.date}</p>
+                  <p className="text-xs text-gray-500">
+                    {formatDate(`${post.date}T00:00:00`)}
+                  </p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-amber-400 transition-colors mt-1 shrink-0" />
               </div>

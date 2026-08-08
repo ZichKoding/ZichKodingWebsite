@@ -1,21 +1,12 @@
 import { MetadataRoute } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { getAllPosts } from '@/lib/content/blog';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://zichkoding.com';
 
-  const supabase = await createClient();
-
-  // Fetch published blog post slugs
-  const { data: posts } = await supabase
-    .from('posts')
-    .select('slug, updated_at')
-    .eq('published', true)
-    .order('published_at', { ascending: false });
-
-  const blogEntries: MetadataRoute.Sitemap = (posts || []).map((post) => ({
+  const blogEntries: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updated_at || undefined,
+    lastModified: post.date,
     changeFrequency: 'weekly',
     priority: 0.7,
   }));

@@ -12,8 +12,8 @@ const contactItems = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'chris.zichko@zichkoding.com',
-    href: 'mailto:chris.zichko@zichkoding.com',
+    value: 'chriszichkocoding@gmail.com',
+    href: 'mailto:chriszichkocoding@gmail.com',
     color: 'text-cyan-400',
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/30',

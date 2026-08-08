@@ -1,0 +1,30 @@
+---
+title: "Relaunch: a truthful, static portfolio"
+date: "2026-08-07"
+excerpt: "This site is now fully static, and every claim on it is real. What changed, why, and what I'm building next."
+category: "meta"
+---
+
+This site just got rebuilt from the inside out, and the two changes worth writing down are
+architectural and editorial.
+
+**Architectural:** the site is now fully static. The previous version ran on a
+database-backed CMS with an admin panel, auth, and row-level security — genuinely fun to
+build, and complete overkill for a solo developer's portfolio. Blog posts are now MDX files
+in the repo, project and skill data are typed TypeScript files, and the contact form sends
+email through a serverless function. Less to host, less to secure, nothing to keep alive.
+
+**Editorial:** everything on this site is now real. The earlier scaffold shipped with
+placeholder content — invented employers, made-up projects, proficiency percentages pulled
+from thin air. That's normal for a template and wrong for a portfolio, so it's gone. What's
+here now is what I actually do: I run IT for a national trade association, where I maintain a
+production compliance platform and run staged data migrations. On my own time I build
+local-first AI systems — a terminal agent harness in Rust, an offline Android AI companion,
+and the persistent-memory tooling my own AI-assisted workflow runs on.
+
+That's also what I plan to write about here: AI-augmented engineering as it actually looks in
+practice — local models, agent harnesses, memory systems, and the process discipline (test
+first, red-team the plan, crawl-walk-run the rollout) that keeps AI-assisted work honest.
+
+If any of that overlaps with what you're building, the terminal on the home page has a
+`contact` command.

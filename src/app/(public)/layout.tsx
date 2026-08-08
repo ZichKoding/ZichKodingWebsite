@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/public/Navbar';
 import { ConditionalFooter } from '@/components/public/ConditionalFooter';
 import { PublicLayoutClient } from '@/components/public/PublicLayoutClient';
+import { getAllPosts } from '@/lib/content/blog';
 
 export const metadata: Metadata = {
-  title: 'Chris | ZichKoding - Portfolio',
-  description: 'Full-stack developer portfolio showcasing projects and blog posts',
+  title: 'Chris Zichko | ZichKoding — Portfolio',
+  description:
+    'Portfolio of Chris Zichko: production systems owner and builder of local-first AI tools — Rust agent harnesses, on-device Android AI, and persistent-memory systems.',
 };
 
 export default function PublicLayout({
@@ -13,8 +15,14 @@ export default function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Server-side read of the MDX content; the terminal `blog` command and the
+  // home blog section both consume this, so they can never drift from /blog.
+  const recentPosts = getAllPosts()
+    .slice(0, 3)
+    .map(({ slug, title, date }) => ({ slug, title, date }));
+
   return (
-    <PublicLayoutClient>
+    <PublicLayoutClient recentPosts={recentPosts}>
       <div className="flex flex-col min-h-screen bg-slate-950">
         {/* Starfield background effect */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">

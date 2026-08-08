@@ -1,3 +1,10 @@
+import { PROJECTS } from './projects';
+import { SKILLS } from './skills';
+
+// Single source of truth for the home terminal + home sections.
+// Content policy: every claim here is real. No invented employers, dates,
+// percentages, or metrics — where a fact is unknown the copy avoids needing it.
+
 export const TERMINAL_DATA = {
   asciiLogo: `
   ███████╗██╗ ██████╗██╗  ██╗██╗  ██╗ ██████╗ ██████╗ ██████╗ ██╗███╗   ██╗ ██████╗
@@ -8,115 +15,80 @@ export const TERMINAL_DATA = {
   ╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝
   `,
 
-  skills: {
-    Frontend: [
-      { name: 'React', proficiency: 95 },
-      { name: 'Next.js', proficiency: 95 },
-      { name: 'TypeScript', proficiency: 90 },
-      { name: 'Tailwind CSS', proficiency: 92 },
-      { name: 'JavaScript ES6+', proficiency: 94 },
-    ],
-    Backend: [
-      { name: 'Node.js', proficiency: 93 },
-      { name: 'Express', proficiency: 90 },
-      { name: 'PostgreSQL', proficiency: 88 },
-      { name: 'MongoDB', proficiency: 85 },
-      { name: 'RESTful APIs', proficiency: 92 },
-    ],
-    DevOps: [
-      { name: 'Docker', proficiency: 85 },
-      { name: 'AWS', proficiency: 80 },
-      { name: 'Git & GitHub', proficiency: 95 },
-      { name: 'CI/CD', proficiency: 82 },
-      { name: 'Linux', proficiency: 88 },
-    ],
-    Tools: [
-      { name: 'Figma', proficiency: 75 },
-      { name: 'Webpack', proficiency: 80 },
-      { name: 'NPM & Yarn', proficiency: 90 },
-      { name: 'VS Code', proficiency: 95 },
-      { name: 'Postman', proficiency: 85 },
-    ],
-    Leadership: [
-      { name: 'Team Management', proficiency: 88 },
-      { name: 'Mentoring', proficiency: 85 },
-      { name: 'Project Planning', proficiency: 87 },
-      { name: 'Technical Strategy', proficiency: 86 },
-      { name: 'Communication', proficiency: 90 },
-    ],
-  },
+  skills: SKILLS,
 
-  projects: [
-    {
-      name: 'ZichKoding Dashboard',
-      description: 'Full-stack analytics platform with real-time data visualization',
-      tech: ['React', 'Node.js', 'PostgreSQL', 'WebSockets'],
-      link: '/projects/zichkoding-dashboard',
-    },
-    {
-      name: 'Quantum State Explorer',
-      description: 'Interactive physics simulation showcasing quantum mechanics concepts',
-      tech: ['Next.js', 'Three.js', 'TypeScript'],
-      link: '/projects/quantum-explorer',
-    },
-    {
-      name: 'Portfolio Platform',
-      description: 'Dynamic portfolio builder for developers with terminal interface',
-      tech: ['Next.js', 'Tailwind CSS', 'TypeScript'],
-      link: '/projects/portfolio-builder',
-    },
-  ],
+  // Home terminal + projects section show the first three featured projects;
+  // the full list lives on /projects.
+  projects: PROJECTS.filter((p) => p.featured)
+    .sort((a, b) => a.display_order - b.display_order)
+    .slice(0, 3)
+    .map((p) => ({
+      name: p.title,
+      description: p.description,
+      tech: p.tech_stack,
+      link: p.github_url ?? '/projects',
+    })),
 
   career: [
     {
-      company: 'TechCorp Solutions',
-      role: 'Lead Developer & Technology Manager',
-      period: '2022 - Present',
-      description: 'Leading full-stack development team of 5+ developers',
+      company: 'American Recovery Association',
+      role: 'IT Lead',
+      period: 'Present',
+      description:
+        'Sole IT owner for a national trade association: maintaining and modernizing a production compliance platform (PHP/Zend), integrating vendor APIs, running staged production data migrations, and coordinating outside contractors.',
     },
     {
-      company: 'Digital Innovations Inc',
-      role: 'Senior Full-Stack Developer',
-      period: '2020 - 2022',
-      description: 'Architected and built scalable web applications',
+      company: 'Independent / Open Source',
+      role: 'AI Systems Builder',
+      period: 'Ongoing',
+      description:
+        'Building local-first AI systems — the Senku terminal agent (Rust), the Shenron Android companion (Kotlin), and persistent-memory tooling — while working toward independent software work.',
     },
     {
-      company: 'StartUp Labs',
-      role: 'Full-Stack Developer',
-      period: '2018 - 2020',
-      description: 'Developed core platform features from prototype to production',
+      company: 'University of Central Florida',
+      role: 'Full-Stack Web Development Certificate',
+      period: 'Milestone',
+      description:
+        'Formal full-stack training: JavaScript, React, Node, databases, and the foundations this portfolio is built on.',
     },
     {
-      company: 'Freelance',
-      role: 'Full-Stack Web Developer',
-      period: '2017 - 2018',
-      description: 'Built custom web solutions for various clients',
+      company: 'United States Marine Corps',
+      role: 'Service',
+      period: 'Earlier',
+      description:
+        'Where the crawl-walk-run discipline comes from: prove it safe, run it small, then widen. It still governs how I ship production changes today.',
     },
   ],
 
   about: `╔════════════════════════════════════════════════════════════════╗
-║                  CHRIS - DEVELOPER PROFILE                    ║
+║              CHRIS ZICHKO — DEVELOPER PROFILE                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-Lead Developer & Technology Manager | UCF Certified Full-Stack Web Developer
+IT Lead & AI-Augmented Software Engineer
 
-Passionate about building scalable, elegant software solutions. Enthusiast of
-space exploration, physics, and quantum mechanics. With 6+ years of experience
-in full-stack development and technical leadership, I create digital experiences
-that are both powerful and beautiful.
+I run IT for the American Recovery Association, a national trade
+association — maintaining and modernizing a production compliance
+platform, integrating vendor APIs, and running staged data migrations
+on systems businesses depend on daily.
 
-When not coding, I'm reading about quantum physics or stargazing.
+Outside the day job I build AI systems that run close to the metal:
+a Rust terminal agent (Senku), an offline Android AI companion
+(Shenron), and the persistent-memory tooling my own AI-assisted
+workflow runs on.
 
-✦ Certified in full-stack web development from University of Central Florida
-✦ 6+ years of professional development experience
-✦ Leadership experience managing development teams
-✦ Passionate about clean code, performance optimization, and UX design`,
+U.S. Marine Corps background. UCF-certified full-stack developer.
+Space and quantum-physics enthusiast, based in Florida.
+
+✦ UCF Certified Full-Stack Web Developer
+✦ U.S. Marine Corps veteran — crawl, walk, run
+✦ Production systems owner: PHP/Zend, MySQL, Docker
+✦ Local-first AI: Ollama, LiteRT-LM, agent harnesses`,
 
   contactInfo: `╔════════════════════════════════════════════════════════════════╗
 ║                    CONTACT INFORMATION                         ║
 ╚════════════════════════════════════════════════════════════════╝
 
-Email: chris.zichko@zichkoding.com
+Email: chriszichkocoding@gmail.com
 GitHub: github.com/ZichKoding
 LinkedIn: linkedin.com/in/chris-zichko-264b25217/
 Location: Florida, USA
@@ -125,21 +97,19 @@ Location: Florida, USA
 💼 View my LinkedIn profile
 🔗 Check out my GitHub repositories`,
 
-  blogPosts: [
-    { title: 'Building Scalable Web Applications with Next.js', date: 'Jan 15, 2024', slug: 'nextjs-scalability' },
-    { title: 'Understanding Quantum Computing Basics', date: 'Jan 8, 2024', slug: 'quantum-basics' },
-    { title: 'Terminal UIs with React - A Modern Approach', date: 'Dec 30, 2023', slug: 'terminal-ui-react' },
-  ],
+  // No public resume PDF is published yet. Flip to true once public/resume.pdf
+  // exists and the terminal 'resume' command offers the download again.
+  resumeAvailable: false,
 };
 
 export const COMMANDS = [
   { name: 'help', description: 'Display this help message' },
   { name: 'about', description: 'Learn about Chris' },
-  { name: 'skills', description: 'View technical skills with proficiency levels' },
+  { name: 'skills', description: 'View technical skills' },
   { name: 'projects', description: 'Browse featured projects' },
   { name: 'career', description: 'View career timeline' },
   { name: 'contact', description: 'Get contact information' },
-  { name: 'resume', description: 'Download resume' },
+  { name: 'resume', description: 'Resume info' },
   { name: 'blog', description: 'View recent blog posts' },
   { name: 'clear', description: 'Clear terminal screen' },
   { name: 'ls', description: 'List available directories' },

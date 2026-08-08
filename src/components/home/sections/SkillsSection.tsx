@@ -2,18 +2,17 @@
 
 import React from 'react';
 import { TERMINAL_DATA } from '@/data/terminal-data';
-import { Monitor, Server, Cloud, Wrench, Trophy } from 'lucide-react';
+import { Code2, Bot, Server, ClipboardCheck, Wrench } from 'lucide-react';
 
 interface SkillsSectionProps {
   isActive: boolean;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
-  Frontend: Monitor,
-  Backend: Server,
-  DevOps: Cloud,
-  Tools: Wrench,
-  Leadership: Trophy,
+  'Languages & Frameworks': Code2,
+  'AI Engineering': Bot,
+  'Platform & Ops': Server,
+  Practices: ClipboardCheck,
 };
 
 export function SkillsSection({ isActive }: SkillsSectionProps) {
@@ -26,8 +25,8 @@ export function SkillsSection({ isActive }: SkillsSectionProps) {
           </span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Object.entries(TERMINAL_DATA.skills).map(([category, skills], catIdx) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {TERMINAL_DATA.skills.map(({ category, items }, catIdx) => {
             const Icon = categoryIcons[category] || Wrench;
             return (
               <div
@@ -46,26 +45,19 @@ export function SkillsSection({ isActive }: SkillsSectionProps) {
                   </h3>
                 </div>
 
-                <div className="space-y-3">
-                  {skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-gray-300">{skill.name}</span>
-                        <span className="text-gray-500">{skill.proficiency}%</span>
-                      </div>
-                      <div className="h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full"
-                          style={{
-                            width: isActive ? `${skill.proficiency}%` : '0%',
-                            transition: 'width 1s ease-out',
-                            transitionDelay: `${0.08 * catIdx + 0.3}s`,
-                          }}
-                        />
-                      </div>
-                    </div>
+                <ul className="space-y-2">
+                  {items.map((skill) => (
+                    <li key={skill.name} className="flex items-baseline gap-2 text-sm">
+                      <span className="text-cyan-500/70 shrink-0" aria-hidden="true">
+                        ▹
+                      </span>
+                      <span className="text-gray-300">{skill.name}</span>
+                      {skill.note && (
+                        <span className="text-xs text-gray-500 truncate">{skill.note}</span>
+                      )}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             );
           })}

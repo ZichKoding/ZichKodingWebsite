@@ -5,7 +5,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useTerminal, TerminalLine } from '@/hooks/useTerminal';
 import { StarfieldHandle } from '@/components/home/Starfield';
 
+export interface RecentPost {
+  slug: string;
+  title: string;
+  date: string;
+}
+
 interface TerminalContextValue {
+  recentPosts: RecentPost[];
   output: TerminalLine[];
   currentInput: string;
   setCurrentInput: (val: string) => void;
@@ -33,7 +40,13 @@ export function useTerminalContext() {
   return ctx;
 }
 
-export function TerminalProvider({ children }: { children: React.ReactNode }) {
+export function TerminalProvider({
+  children,
+  recentPosts = [],
+}: {
+  children: React.ReactNode;
+  recentPosts?: RecentPost[];
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const isOnHomepage = pathname === '/';
@@ -67,7 +80,8 @@ export function TerminalProvider({ children }: { children: React.ReactNode }) {
   const terminal = useTerminal(
     (path: string) => router.push(path),
     onWarpNavigate,
-    onSectionScroll
+    onSectionScroll,
+    recentPosts
   );
 
   const wrappedInitialize = useCallback(() => {
@@ -83,6 +97,7 @@ export function TerminalProvider({ children }: { children: React.ReactNode }) {
   return (
     <TerminalContext.Provider
       value={{
+        recentPosts,
         output: terminal.output,
         currentInput: terminal.currentInput,
         setCurrentInput: terminal.setCurrentInput,
