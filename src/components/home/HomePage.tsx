@@ -12,6 +12,11 @@ import { ContactSection } from './sections/ContactSection';
 import { useTerminalContext } from '@/contexts/TerminalContext';
 import styles from './HomePage.module.css';
 
+const canScroll = (el: HTMLElement, direction: 'up' | 'down'): boolean =>
+  direction === 'down'
+    ? el.scrollTop + el.clientHeight < el.scrollHeight - 1
+    : el.scrollTop > 0;
+
 const SECTIONS = ['about', 'how-i-work', 'skills', 'projects', 'career', 'blog', 'contact'] as const;
 
 const SECTION_LABELS: Record<(typeof SECTIONS)[number], string> = {
@@ -38,7 +43,10 @@ export function HomePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const lastWheelTime = useRef(0);
+  const lastInnerScrollTime = useRef(0);
   const touchStartY = useRef<number | null>(null);
+  const touchScrollable = useRef<HTMLElement | null>(null);
+  const touchStartScrollTop = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Initialize terminal and trigger about entrance
@@ -104,14 +112,44 @@ export function HomePage() {
     return tag === 'INPUT' || tag === 'TEXTAREA';
   }, []);
 
-  // Wheel handler
+  // Sections with more content than fits the viewport scroll internally.
+  // Find the scrollable ancestor of an event target (if any) so wheel/touch
+  // gestures scroll content first and only page between sections at an edge.
+  const findScrollable = useCallback((start: EventTarget | null): HTMLElement | null => {
+    let el = start instanceof HTMLElement ? start : null;
+    while (el && el !== containerRef.current) {
+      if (el.scrollHeight > el.clientHeight + 1) {
+        const { overflowY } = window.getComputedStyle(el);
+        if (overflowY === 'auto' || overflowY === 'scroll') return el;
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }, []);
+
+  // The active section's scrollable body (for keyboard navigation).
+  const getActiveScrollable = useCallback((): HTMLElement | null => {
+    const sections = containerRef.current?.querySelectorAll<HTMLElement>(`.${styles.section}`);
+    const el = sections?.[activeSection]?.querySelector<HTMLElement>('.overflow-y-auto');
+    return el && el.scrollHeight > el.clientHeight + 1 ? el : null;
+  }, [activeSection]);
+
+  // Wheel handler: scroll overflowing section content natively first; only
+  // page between sections once the content is at its edge (with a short grace
+  // period so one continuous scroll doesn't blow straight through the edge).
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (isInputFocused()) return;
+      const direction = e.deltaY > 0 ? 'down' : 'up';
+      const scrollable = findScrollable(e.target);
+      if (scrollable && canScroll(scrollable, direction)) {
+        lastInnerScrollTime.current = Date.now();
+        return; // let the browser scroll the content
+      }
 
       e.preventDefault();
 
       const now = Date.now();
+      if (scrollable && now - lastInnerScrollTime.current < 400) return;
       if (now - lastWheelTime.current < WHEEL_COOLDOWN) return;
       if (Math.abs(e.deltaY) < WHEEL_THRESHOLD) return;
       if (isTransitioning) return;
@@ -134,23 +172,34 @@ export function HomePage() {
         container.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [activeSection, isTransitioning, navigateToSection, isInputFocused]);
+  }, [activeSection, isTransitioning, navigateToSection, findScrollable]);
 
-  // Touch handlers
+  // Touch handlers: if the gesture scrolled (or could scroll) overflowing
+  // section content, it was a content scroll — not a section swipe.
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
-      if (isInputFocused()) return;
       touchStartY.current = e.touches[0].clientY;
+      touchScrollable.current = findScrollable(e.target);
+      touchStartScrollTop.current = touchScrollable.current?.scrollTop ?? 0;
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (isInputFocused() || touchStartY.current === null) return;
+      if (touchStartY.current === null) return;
       if (isTransitioning) return;
 
       const deltaY = touchStartY.current - e.changedTouches[0].clientY;
       touchStartY.current = null;
 
       if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
+
+      const scrollable = touchScrollable.current;
+      touchScrollable.current = null;
+      if (scrollable) {
+        const scrolled =
+          Math.abs(scrollable.scrollTop - touchStartScrollTop.current) > 1;
+        const direction = deltaY > 0 ? 'down' : 'up';
+        if (scrolled || canScroll(scrollable, direction)) return;
+      }
 
       if (deltaY > 0) {
         navigateToSection(activeSection + 1);
@@ -170,24 +219,45 @@ export function HomePage() {
         container.removeEventListener('touchend', handleTouchEnd);
       }
     };
-  }, [activeSection, isTransitioning, navigateToSection, isInputFocused]);
+  }, [activeSection, isTransitioning, navigateToSection, findScrollable]);
 
-  // Keyboard handler
+  // Keyboard handler: arrows/page keys scroll overflowing section content
+  // first, then page between sections once the content is at its edge.
   useEffect(() => {
+    const scrollOrNavigate = (
+      e: KeyboardEvent,
+      direction: 'up' | 'down',
+      step: (el: HTMLElement) => number
+    ) => {
+      e.preventDefault();
+      const scrollable = getActiveScrollable();
+      if (scrollable && canScroll(scrollable, direction)) {
+        const magnitude = step(scrollable);
+        scrollable.scrollBy({
+          top: direction === 'down' ? magnitude : -magnitude,
+          behavior: 'smooth',
+        });
+        return;
+      }
+      navigateToSection(direction === 'down' ? activeSection + 1 : activeSection - 1);
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isInputFocused()) return;
       if (isTransitioning) return;
 
       switch (e.key) {
         case 'ArrowDown':
+          scrollOrNavigate(e, 'down', () => 80);
+          break;
         case 'PageDown':
-          e.preventDefault();
-          navigateToSection(activeSection + 1);
+          scrollOrNavigate(e, 'down', (el) => el.clientHeight * 0.8);
           break;
         case 'ArrowUp':
+          scrollOrNavigate(e, 'up', () => 80);
+          break;
         case 'PageUp':
-          e.preventDefault();
-          navigateToSection(activeSection - 1);
+          scrollOrNavigate(e, 'up', (el) => el.clientHeight * 0.8);
           break;
         case 'Home':
           e.preventDefault();
@@ -202,7 +272,7 @@ export function HomePage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeSection, isTransitioning, navigateToSection, isInputFocused]);
+  }, [activeSection, isTransitioning, navigateToSection, isInputFocused, getActiveScrollable]);
 
   // Determine CSS class for a section
   const getSectionClass = (index: number): string => {

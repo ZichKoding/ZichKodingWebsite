@@ -8,8 +8,6 @@ interface AboutSectionProps {
   isActive: boolean;
 }
 
-const TAGLINE = 'Developer & Technology Manager | AI Systems Builder';
-
 const highlights = [
   { icon: Server, label: 'Developer & Technology Manager @ ARA' },
   { icon: Shield, label: 'U.S. Marine Corps Veteran' },
@@ -18,18 +16,6 @@ const highlights = [
 ];
 
 export function AboutSection({ isActive }: AboutSectionProps) {
-  // Parse bio from the about text
-  const lines = TERMINAL_DATA.about.split('\n').filter((l) => l.trim());
-  // Skip the box border lines and the tagline (shown as the subtitle already)
-  const bioLines = lines.filter(
-    (l) =>
-      !l.startsWith('╔') &&
-      !l.startsWith('╚') &&
-      !l.startsWith('║') &&
-      !l.startsWith('✦') &&
-      l.trim() !== TAGLINE
-  );
-
   return (
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-3xl w-full mx-auto my-auto">
@@ -40,13 +26,15 @@ export function AboutSection({ isActive }: AboutSectionProps) {
               Chris Zichko
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 mb-6">{TAGLINE}</p>
+          <p className="text-lg sm:text-xl text-gray-400 mb-6">
+            {TERMINAL_DATA.aboutTagline}
+          </p>
 
           {/* Bio */}
-          <div className="space-y-3 mb-8">
-            {bioLines.map((line, i) => (
+          <div className="space-y-4 mb-8">
+            {TERMINAL_DATA.aboutParagraphs.map((paragraph, i) => (
               <p key={i} className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                {line.trim()}
+                {paragraph}
               </p>
             ))}
           </div>

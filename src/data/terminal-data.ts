@@ -1,6 +1,16 @@
 import { PROJECTS } from './projects';
 import { SKILLS } from './skills';
 
+const ABOUT_TAGLINE = 'Developer & Technology Manager | AI Systems Builder';
+
+// Real prose paragraphs — the About section renders these directly; the
+// terminal `about` command wraps them in its box format below.
+const ABOUT_PARAGRAPHS = [
+  "By day I'm the Developer & Technology Manager at the American Recovery Association — the recovery industry's largest professional association — where I own a production compliance platform (PHP/Zend), integrate vendor and CRM systems, and run staged data migrations on systems businesses depend on daily.",
+  'Through ZichKoding, my own consultancy since 2021, I build websites, PWAs, and custom software for clients. My current focus is AI systems that run close to the metal: a Rust terminal agent (Senku), an offline Android AI companion (Shenron), and the persistent-memory tooling my own AI-assisted workflow runs on.',
+  'Before software: U.S. Marine Corps NCO and Combat Engineer, then plant operations at Cape Canaveral Space Force Station — which is where the space obsession on this site comes from. UCF-certified full-stack developer, based in Florida.',
+];
+
 // Single source of truth for the home terminal + home sections.
 // Content policy: every claim here is real. No invented employers, dates,
 // percentages, or metrics — where a fact is unknown the copy avoids needing it.
@@ -35,7 +45,7 @@ export const TERMINAL_DATA = {
       role: 'Developer & Technology Manager',
       period: 'Jul 2024 – Present',
       description:
-        "Sole in-house technology professional for the recovery industry's largest professional association: own the production compliance platform (PHP/Zend), cut platform load times from 5–30 minutes to under 5 seconds, integrated Zoho CRM with compliance monitoring, and established a bi-weekly release cadence with outside contractors.",
+        "Own the production compliance platform (PHP/Zend) for the recovery industry's largest professional association — cut platform load times from 5–30 minutes to under 5 seconds, integrated Zoho CRM with compliance monitoring, and established a bi-weekly release cadence with outside contractors.",
     },
     {
       company: 'Melken Solutions',
@@ -94,28 +104,16 @@ export const TERMINAL_DATA = {
     },
   ],
 
+  aboutTagline: ABOUT_TAGLINE,
+  aboutParagraphs: ABOUT_PARAGRAPHS,
+
   about: `╔════════════════════════════════════════════════════════════════╗
 ║              CHRIS ZICHKO — DEVELOPER PROFILE                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-Developer & Technology Manager | AI Systems Builder
+${ABOUT_TAGLINE}
 
-By day I'm the sole in-house technology professional at the American
-Recovery Association — the recovery industry's largest professional
-association — where I own a production compliance platform (PHP/Zend),
-integrate vendor and CRM systems, and run staged data migrations on
-systems businesses depend on daily.
-
-Through ZichKoding, my own consultancy since 2021, I build websites,
-PWAs, and custom software for clients. My current focus is AI systems
-that run close to the metal: a Rust terminal agent (Senku), an offline
-Android AI companion (Shenron), and the persistent-memory tooling my
-own AI-assisted workflow runs on.
-
-Before software: U.S. Marine Corps NCO and Combat Engineer, then plant
-operations at Cape Canaveral Space Force Station — which is where the
-space obsession on this site comes from. UCF-certified full-stack
-developer, based in Florida.
+${ABOUT_PARAGRAPHS.join('\n\n')}
 
 ✦ Developer & Technology Manager @ ARA
 ✦ U.S. Marine Corps veteran — NCO, Combat Engineer
