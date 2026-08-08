@@ -59,7 +59,15 @@ export function getAllPosts(dir: string = DEFAULT_DIR): PostMeta[] {
   return readAll(dir)
     .filter((p) => p.published)
     .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
-    .map(({ content: _content, ...meta }) => meta);
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      date: p.date,
+      excerpt: p.excerpt,
+      category: p.category,
+      published: p.published,
+      coverImage: p.coverImage,
+    }));
 }
 
 export function getPostBySlug(slug: string, dir: string = DEFAULT_DIR): Post | null {

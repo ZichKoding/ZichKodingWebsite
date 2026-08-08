@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Starfield } from './Starfield';
 import { SectionDots } from './SectionDots';
 import { AboutSection } from './sections/AboutSection';
+import { HowIWorkSection } from './sections/HowIWorkSection';
 import { SkillsSection } from './sections/SkillsSection';
 import { ProjectsSection } from './sections/ProjectsSection';
 import { CareerSection } from './sections/CareerSection';
@@ -12,7 +13,17 @@ import { ContactSection } from './sections/ContactSection';
 import { useTerminalContext } from '@/contexts/TerminalContext';
 import styles from './HomePage.module.css';
 
-const SECTIONS = ['about', 'skills', 'projects', 'career', 'blog', 'contact'] as const;
+const SECTIONS = ['about', 'how-i-work', 'skills', 'projects', 'career', 'blog', 'contact'] as const;
+
+const SECTION_LABELS: Record<(typeof SECTIONS)[number], string> = {
+  about: 'About',
+  'how-i-work': 'How I Work',
+  skills: 'Skills',
+  projects: 'Projects',
+  career: 'Career',
+  blog: 'Blog',
+  contact: 'Contact',
+};
 const TRANSITION_DURATION = 800;
 const WHEEL_COOLDOWN = 1000;
 const WHEEL_THRESHOLD = 50;
@@ -222,11 +233,12 @@ export function HomePage() {
 
   const sectionComponents = [
     <AboutSection key="about" isActive={activeSection === 0 && hasLoaded} />,
-    <SkillsSection key="skills" isActive={activeSection === 1 || targetSection === 1} />,
-    <ProjectsSection key="projects" isActive={activeSection === 2 || targetSection === 2} />,
-    <CareerSection key="career" isActive={activeSection === 3 || targetSection === 3} />,
-    <BlogSection key="blog" isActive={activeSection === 4 || targetSection === 4} />,
-    <ContactSection key="contact" isActive={activeSection === 5 || targetSection === 5} />,
+    <HowIWorkSection key="how-i-work" isActive={activeSection === 1 || targetSection === 1} />,
+    <SkillsSection key="skills" isActive={activeSection === 2 || targetSection === 2} />,
+    <ProjectsSection key="projects" isActive={activeSection === 3 || targetSection === 3} />,
+    <CareerSection key="career" isActive={activeSection === 4 || targetSection === 4} />,
+    <BlogSection key="blog" isActive={activeSection === 5 || targetSection === 5} />,
+    <ContactSection key="contact" isActive={activeSection === 6 || targetSection === 6} />,
   ];
 
   return (
@@ -259,15 +271,18 @@ export function HomePage() {
 
       {/* Section dots */}
       <SectionDots
-        sections={SECTIONS.map((s) => s.charAt(0).toUpperCase() + s.slice(1))}
+        sections={SECTIONS.map((s) => SECTION_LABELS[s])}
         activeIndex={activeSection}
         onNavigate={navigateToSection}
       />
 
       {/* Accessibility */}
       <div className="sr-only">
-        <h1>Chris&apos;s Portfolio</h1>
-        <p>Interactive portfolio with sections: about, skills, projects, career, blog, contact</p>
+        <h1>Chris Zichko&apos;s Portfolio</h1>
+        <p>
+          Interactive portfolio with sections: about, how I work, skills, projects, career,
+          blog, contact
+        </p>
       </div>
     </div>
   );

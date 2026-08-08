@@ -99,6 +99,28 @@ export const useTerminal = (
           break;
         }
 
+        case 'how-i-work':
+        case 'principles': {
+          const { principles, strengths, growthAreas } = TERMINAL_DATA.howIWork;
+          addLine('How I Work', 'success');
+          addLine('═'.repeat(50), 'output');
+
+          addLine('\nOPERATING PRINCIPLES', 'success');
+          principles.forEach((p) => {
+            addLine(`  ✦ ${p.title}`, 'career');
+            addLine(`    ${p.detail}`, 'output');
+          });
+
+          addLine('\nWHERE I\'M STRONG', 'success');
+          strengths.forEach((s) => addLine(`  • ${s}`, 'skill'));
+
+          addLine('\nWHAT I\'M WORKING ON', 'success');
+          growthAreas.forEach((g) => addLine(`  • ${g}`, 'output'));
+
+          onSectionScroll?.('how-i-work');
+          break;
+        }
+
         case 'skills': {
           addLine('Loading skills...', 'success');
           addLine('', 'output');
@@ -179,8 +201,9 @@ export const useTerminal = (
         }
 
         case 'ls': {
-          addLine('total 9', 'output');
+          addLine('total 10', 'output');
           addLine('drwxr-xr-x  1 chris  staff   32 Jan 10 10:42 about/', 'output');
+          addLine('drwxr-xr-x  1 chris  staff   32 Jan 10 10:42 how-i-work/', 'output');
           addLine('drwxr-xr-x  1 chris  staff   32 Jan 10 10:42 skills/', 'output');
           addLine('drwxr-xr-x  1 chris  staff   32 Jan 10 10:42 projects/', 'output');
           addLine('drwxr-xr-x  1 chris  staff   32 Jan 10 10:42 career/', 'output');

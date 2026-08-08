@@ -13,9 +13,9 @@ export default function ContactPage() {
       <div className="space-y-12">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Let's Connect</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Let&apos;s Connect</h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Have a question or want to work together? Feel free to reach out. I'm
+            Have a question or want to work together? Feel free to reach out. I&apos;m
             always interested in hearing about new projects and opportunities.
           </p>
         </div>

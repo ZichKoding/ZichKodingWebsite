@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { BlogCard } from '@/components/public/BlogCard';
 import { SearchBar } from '@/components/public/SearchBar';
@@ -87,12 +88,12 @@ export function BlogListClient({ posts }: { posts: PostMeta[] }) {
               : 'No posts available yet'}
           </p>
           {searchQuery && (
-            <a
+            <Link
               href="/blog"
               className="inline-block px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               Clear search
-            </a>
+            </Link>
           )}
         </div>
       )}

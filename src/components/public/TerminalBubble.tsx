@@ -5,9 +5,16 @@ import { Terminal, Minus } from 'lucide-react';
 import { useTerminalContext } from '@/contexts/TerminalContext';
 import { TerminalOutput } from '@/components/home/TerminalOutput';
 
+const QUICK_COMMANDS = ['help', 'about', 'how-i-work', 'projects', 'contact'];
+
 export function TerminalBubble() {
   const ctx = useTerminalContext();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleQuickCommand = (cmd: string) => {
+    ctx.processCommand(cmd);
+    inputRef.current?.focus({ preventScroll: true });
+  };
 
   // Hooks must always run — never place them after an early return
   useEffect(() => {
@@ -59,6 +66,19 @@ export function TerminalBubble() {
         lines={ctx.output}
         outputEndRef={ctx.outputEndRef}
       />
+
+      {/* Quick command suggestions */}
+      <div className="px-4 py-2 bg-gray-950 border-t border-cyan-500/20 shrink-0 flex flex-wrap gap-1.5">
+        {QUICK_COMMANDS.map((cmd) => (
+          <button
+            key={cmd}
+            onClick={() => handleQuickCommand(cmd)}
+            className="px-2 py-1 text-[11px] font-mono bg-cyan-900/30 border border-cyan-500/40 text-cyan-300 rounded hover:bg-cyan-900/50 hover:border-cyan-400 hover:text-cyan-200 transition-all duration-200 cursor-pointer"
+          >
+            {cmd}
+          </button>
+        ))}
+      </div>
 
       {/* Input */}
       <div className="px-4 py-2.5 bg-gray-950 border-t border-cyan-500/20 shrink-0">

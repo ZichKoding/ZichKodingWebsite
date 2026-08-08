@@ -40,10 +40,13 @@ export const Starfield = forwardRef<StarfieldHandle>(
     const animationRef = useRef<number>(0);
     const lastTimeRef = useRef<number>(0);
     const warpGenRef = useRef(0);
+    const reducedMotionRef = useRef(false);
 
     // Expose warp trigger via ref
     useImperativeHandle(ref, () => ({
       triggerWarp: (durationMs = 1500) => {
+        // Reduced motion: no warp streaks, no speed ramp — resolve immediately.
+        if (reducedMotionRef.current) return Promise.resolve();
         return new Promise<void>((resolve) => {
           const gen = ++warpGenRef.current; // cancel any previous warp
           isWarpingRef.current = true;
@@ -88,10 +91,28 @@ export const Starfield = forwardRef<StarfieldHandle>(
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      reducedMotionRef.current = mediaQuery.matches;
+      const onMotionPreferenceChange = (e: MediaQueryListEvent) => {
+        reducedMotionRef.current = e.matches;
+        if (e.matches) {
+          cancelAnimationFrame(animationRef.current);
+        } else {
+          lastTimeRef.current = 0;
+          animationRef.current = requestAnimationFrame(animate);
+        }
+      };
+      mediaQuery.addEventListener('change', onMotionPreferenceChange);
+
       // Size canvas to window
       const resize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // A resize clears the canvas; with reduced motion there is no loop to
+        // repaint it, so draw one static frame.
+        if (reducedMotionRef.current) {
+          requestAnimationFrame(animate);
+        }
       };
       resize();
 
@@ -111,8 +132,9 @@ export const Starfield = forwardRef<StarfieldHandle>(
         const h = canvas.height;
         const cx = w / 2;
         const cy = h / 2;
-        const speed = speedRef.current;
-        const isWarping = isWarpingRef.current || speed > BASE_SPEED * 2;
+        const reduced = reducedMotionRef.current;
+        const speed = reduced ? 0 : speedRef.current;
+        const isWarping = !reduced && (isWarpingRef.current || speed > BASE_SPEED * 2);
 
         // Clear with near-black background
         ctx.fillStyle = '#050510';
@@ -181,7 +203,10 @@ export const Starfield = forwardRef<StarfieldHandle>(
           }
         }
 
-        animationRef.current = requestAnimationFrame(animate);
+        // Reduced motion: this frame was a one-off static paint — don't loop.
+        if (!reduced) {
+          animationRef.current = requestAnimationFrame(animate);
+        }
       };
 
       animationRef.current = requestAnimationFrame(animate);
@@ -189,6 +214,7 @@ export const Starfield = forwardRef<StarfieldHandle>(
       return () => {
         cancelAnimationFrame(animationRef.current);
         resizeObserver.disconnect();
+        mediaQuery.removeEventListener('change', onMotionPreferenceChange);
       };
     }, [initStars]);
 

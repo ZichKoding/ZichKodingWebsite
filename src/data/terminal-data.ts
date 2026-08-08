@@ -97,6 +97,46 @@ Location: Florida, USA
 💼 View my LinkedIn profile
 🔗 Check out my GitHub repositories`,
 
+  howIWork: {
+    principles: [
+      {
+        title: 'Crawl, walk, run',
+        detail:
+          'Prove it safe read-only, run it small with the numbers asserted up front, then widen. Marine Corps discipline applied to production changes — additive over destructive, every time.',
+      },
+      {
+        title: 'Test-driven, red-teamed',
+        detail:
+          'Tests come before implementation, and non-trivial plans get adversarially reviewed before any code gets written.',
+      },
+      {
+        title: 'Verification first',
+        detail:
+          "Evidence before assertions: check the system's own durable record, not the story about it. A vendor's 200 OK is not proof; a verified state change is.",
+      },
+      {
+        title: 'Small, reviewable changes',
+        detail:
+          'Single-purpose branches and PRs. If a change is hard to review, it is too big.',
+      },
+      {
+        title: 'AI-augmented, human-accountable',
+        detail:
+          'AI agents do real work here — backed by persistent memory, tests, and review loops that keep them honest. The accountability stays with me.',
+      },
+    ],
+    strengths: [
+      'Range: legacy PHP production systems to Rust, Kotlin, and on-device AI',
+      'Process discipline that survives contact with production',
+      'End-to-end ownership: design, build, test, ship, operate — solo when needed',
+    ],
+    growthAreas: [
+      'Evaluation rigor — my model and tooling judgments lean anecdotal; I am building the habit of measuring instead',
+      'Focus — I run more parallel projects than I should, and I am actively narrowing',
+      'Solo blind spots — no team review by default, so I counter with red-team review loops and open-source contributors',
+    ],
+  },
+
   // No public resume PDF is published yet. Flip to true once public/resume.pdf
   // exists and the terminal 'resume' command offers the download again.
   resumeAvailable: false,
@@ -105,6 +145,7 @@ Location: Florida, USA
 export const COMMANDS = [
   { name: 'help', description: 'Display this help message' },
   { name: 'about', description: 'Learn about Chris' },
+  { name: 'how-i-work', description: 'Principles, strengths, and growth areas' },
   { name: 'skills', description: 'View technical skills' },
   { name: 'projects', description: 'Browse featured projects' },
   { name: 'career', description: 'View career timeline' },

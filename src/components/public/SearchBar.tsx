@@ -14,7 +14,10 @@ export function SearchBar({ placeholder = 'Search posts...' }: SearchBarProps) {
   const [value, setValue] = useState(searchParams.get('q') || '');
   const isFirstRender = useRef(true);
   const searchParamsRef = useRef(searchParams);
-  searchParamsRef.current = searchParams;
+
+  useEffect(() => {
+    searchParamsRef.current = searchParams;
+  }, [searchParams]);
 
   // Debounce search — only navigate after user types, not on initial mount
   useEffect(() => {

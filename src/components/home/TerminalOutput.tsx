@@ -51,7 +51,11 @@ const TypingAnimation: React.FC<{ text: string; type: TerminalLineType }> = ({ t
 
 export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines, outputEndRef }) => {
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-3 space-y-0.5 scrollbar-thin scrollbar-track-gray-900 scrollbar-thumb-blue-600">
+    <div
+      className="flex-1 overflow-y-auto px-4 py-3 space-y-0.5 scrollbar-thin scrollbar-track-gray-900 scrollbar-thumb-blue-600"
+      aria-live="polite"
+      role="log"
+    >
       {lines.length === 0 && (
         <div className="text-gray-500 text-center py-8">
           <p>Terminal initialized. Type a command to begin...</p>
@@ -61,13 +65,6 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines, outputEnd
       {lines.map((line) => (
         <div key={line.id} className={getTypeStyles(line.type)}>
           {line.type === 'input' && <span>{'visitor@zichkoding:~$ '}</span>}
-
-          {line.type === 'skill' && line.data?.skill && (
-            <div className="flex items-center justify-between gap-4">
-              <span className="min-w-fit">{line.data.skill.name}</span>
-              <code>{line.content}</code>
-            </div>
-          )}
 
           {line.type === 'progress' && (
             <div>
@@ -87,7 +84,7 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines, outputEnd
             </div>
           )}
 
-          {!['skill', 'project', 'career', 'progress'].includes(line.type) && (
+          {!['project', 'career', 'progress'].includes(line.type) && (
             <span>{line.content}</span>
           )}
         </div>
