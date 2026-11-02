@@ -1,14 +1,14 @@
 import { PROJECTS } from './projects';
 import { SKILLS } from './skills';
 
-const ABOUT_TAGLINE = 'Developer & Technology Manager | AI Systems Builder';
+const ABOUT_TAGLINE = 'Software, AI engineering, and edge models';
 
-// Real prose paragraphs — the About section renders these directly; the
+// Real prose paragraphs. The About section renders these directly; the
 // terminal `about` command wraps them in its box format below.
 const ABOUT_PARAGRAPHS = [
-  "By day I'm the Developer & Technology Manager at the American Recovery Association — the recovery industry's largest professional association — where I own a production compliance platform (PHP/Zend), integrate vendor and CRM systems, and run staged data migrations on systems businesses depend on daily.",
-  'Through ZichKoding, my own consultancy since 2021, I build websites, PWAs, and custom software for clients. My current focus is AI systems that run close to the metal: a Rust terminal agent (Senku), an offline Android AI companion (Shenron), and the persistent-memory tooling my own AI-assisted workflow runs on.',
-  'Before software: U.S. Marine Corps NCO and Combat Engineer, then plant operations at Cape Canaveral Space Force Station — which is where the space obsession on this site comes from. UCF-certified full-stack developer, based in Florida.',
+  "I'm the Lead Developer & Technology Manager at the American Recovery Association, the recovery industry's largest professional association. I own the production compliance platform, repo.org, and the tools the association runs on: Google Workspace, Zoho CRM, and Zoho Projects. Claude assists the development and the internal work through skills and tools I write.",
+  'ZichKoding is my consultancy, since 2021. I build traditional software, and I build AI that runs close to the machine. Gemma 4 E4B is the local model. Alam is the Android app. ZichKode is the Python harness beside the editor. Senku, GUPPI, and CRAM keep the plan, the skills, and the memory outside the prompt, so a 16k window can carry a long task.',
+  'Before software: U.S. Marine Corps NCO and Combat Engineer, then plant operations at Cape Canaveral Space Force Station. UCF-certified full-stack developer, based in Florida.',
 ];
 
 // Single source of truth for the home terminal + home sections.
@@ -42,10 +42,10 @@ export const TERMINAL_DATA = {
   career: [
     {
       company: 'American Recovery Association',
-      role: 'Developer & Technology Manager',
+      role: 'Lead Developer & Technology Manager',
       period: 'Jul 2024 – Present',
       description:
-        "Own the production compliance platform (PHP/Zend) for the recovery industry's largest professional association — cut platform load times from 5–30 minutes to under 5 seconds, integrated Zoho CRM with compliance monitoring, and established a bi-weekly release cadence with outside contractors.",
+        'I own the production compliance platform (PHP/Zend), repo.org, and the association\'s Google Workspace, Zoho CRM, and Zoho Projects. Login went from tens of minutes to a couple of seconds. A standardized deployment process made releases much faster. Client integrations made more of the work real-time. Vendor integrations took on operations that used to be manual. Reporting and auditing got stronger. Claude assists the development and the internal work through skills and tools I write.',
     },
     {
       company: 'Melken Solutions',
@@ -93,7 +93,7 @@ export const TERMINAL_DATA = {
       role: 'Lead Plant Operator',
       period: 'Oct 2019 – Apr 2022',
       description:
-        'Ran chemical synthesis skids with SCADA systems at Cape Canaveral Space Force Station, including a stretch as temporary site manager. Where the space theme on this site comes from.',
+        'Ran chemical synthesis skids with SCADA systems at Cape Canaveral Space Force Station, including a stretch as temporary site manager.',
     },
     {
       company: 'United States Marine Corps',
@@ -115,7 +115,7 @@ ${ABOUT_TAGLINE}
 
 ${ABOUT_PARAGRAPHS.join('\n\n')}
 
-✦ Developer & Technology Manager @ ARA
+✦ Lead Developer & Technology Manager @ ARA
 ✦ U.S. Marine Corps veteran — NCO, Combat Engineer
 ✦ Freelance & consulting via ZichKoding since 2021
 ✦ UCF Certified Full-Stack Web Developer`,
@@ -158,18 +158,18 @@ Location: Florida, USA
       {
         title: 'AI-augmented, human-accountable',
         detail:
-          'AI agents do real work here — backed by persistent memory, tests, and review loops that keep them honest. The accountability stays with me.',
+          'Claude assists the work through skills and tools I write. Tests and review loops keep that work honest. The accountability stays with me.',
       },
     ],
     strengths: [
-      'Range: legacy PHP production systems to Rust, Kotlin, and on-device AI',
+      'Range: production PHP, the web stack, and small open models on the device',
       'Process discipline that survives contact with production',
-      'End-to-end ownership: design, build, test, ship, operate — solo when needed',
+      'End-to-end ownership: design, build, test, ship, and operate',
     ],
     growthAreas: [
-      'Evaluation rigor — my model and tooling judgments lean anecdotal; I am building the habit of measuring instead',
-      'Focus — I run more parallel projects than I should, and I am actively narrowing',
-      'Solo blind spots — no team review by default, so I counter with red-team review loops and open-source contributors',
+      'Evaluation rigor. My model and tooling judgments lean anecdotal, and I am building the habit of measuring instead',
+      'Focus. I run more parallel projects than I should, and I am actively narrowing',
+      'Outside review. I build a red-team pass into the plan, because the person who wrote the change is a poor witness to it',
     ],
   },
 

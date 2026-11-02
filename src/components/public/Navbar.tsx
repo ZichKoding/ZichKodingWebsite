@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -29,11 +30,18 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
-          >
-            Chris | ZichKoding
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <Image
+              src="/brand/mark.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-9 w-9"
+              priority
+            />
+            <span className="text-xl font-semibold tracking-tight text-brand-olive">
+              ZichKoding
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -45,13 +53,13 @@ export function Navbar() {
                 className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors relative',
                   isActive(item.href)
-                    ? 'text-cyan-400'
+                    ? 'text-brand-copper'
                     : 'text-gray-300 hover:text-white'
                 )}
               >
                 {item.label}
                 {isActive(item.href) && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-olive to-brand-copper rounded-full" />
                 )}
               </Link>
             ))}
@@ -78,7 +86,7 @@ export function Navbar() {
                 className={cn(
                   'block px-3 py-2 rounded-md text-base font-medium transition-colors',
                   isActive(item.href)
-                    ? 'bg-gray-900/50 text-cyan-400'
+                    ? 'bg-gray-900/50 text-brand-copper'
                     : 'text-gray-300 hover:text-white hover:bg-gray-900/50'
                 )}
               >

@@ -11,12 +11,12 @@ interface TerminalOutputProps {
 const getTypeStyles = (type: TerminalLineType): string => {
   const baseStyle = 'font-mono text-sm leading-relaxed';
   const typeStyles: { [key in TerminalLineType]: string } = {
-    input: `${baseStyle} text-cyan-400 font-semibold`,
+    input: `${baseStyle} text-brand-copper font-semibold`,
     output: `${baseStyle} text-gray-300`,
     error: `${baseStyle} text-red-400`,
     success: `${baseStyle} text-green-400 font-semibold`,
     skill: `${baseStyle} text-emerald-300`,
-    project: `${baseStyle} text-blue-300 font-semibold`,
+    project: `${baseStyle} text-brand-copper-bright font-semibold`,
     career: `${baseStyle} text-purple-300`,
     progress: `${baseStyle} text-yellow-300`,
   };
@@ -79,7 +79,7 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines, outputEnd
           )}
 
           {line.type === 'career' && (
-            <div className="pl-2 border-l border-purple-400 border-opacity-40">
+            <div className="pl-2 border-l border-brand-olive border-opacity-40">
               {line.content}
             </div>
           )}

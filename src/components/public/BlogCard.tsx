@@ -24,7 +24,7 @@ export function BlogCard({
 
   return (
     <Link href={`/blog/${slug}`}>
-      <article className="group h-full flex flex-col rounded-lg overflow-hidden bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer">
+      <article className="group h-full flex flex-col rounded-lg overflow-hidden bg-slate-800/50 border border-slate-700/50 hover:border-brand-copper/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer">
         {/* Cover Image */}
         <div className={`relative h-48 overflow-hidden bg-gradient-to-br ${gradientClasses} group-hover:scale-105 transition-transform duration-300`}>
           {cover_image_url ? (
@@ -47,7 +47,7 @@ export function BlogCard({
         {/* Content */}
         <div className="flex-1 flex flex-col p-4">
           {/* Title */}
-          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-brand-copper transition-colors line-clamp-2">
             {title}
           </h3>
 
@@ -78,7 +78,7 @@ export function BlogCard({
                   {categories.map((category) => (
                     <span
                       key={category.id}
-                      className="inline-block px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded-full"
+                      className="inline-block px-2 py-1 text-xs bg-blue-500/20 text-brand-copper-bright rounded-full"
                     >
                       {category.name}
                     </span>
@@ -91,7 +91,7 @@ export function BlogCard({
 
         {/* Read More Link */}
         <div className="px-4 pb-4 pt-2">
-          <span className="inline-block text-blue-400 text-sm font-medium group-hover:gap-2 transition-all">
+          <span className="inline-block text-brand-copper text-sm font-medium group-hover:gap-2 transition-all">
             Read more →
           </span>
         </div>

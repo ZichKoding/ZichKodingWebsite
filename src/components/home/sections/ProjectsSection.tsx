@@ -10,7 +10,7 @@ interface ProjectsSectionProps {
 }
 
 const gradients = [
-  'from-cyan-500/20 to-blue-500/20',
+  'from-brand-olive/25 to-brand-copper/25',
   'from-purple-500/20 to-pink-500/20',
   'from-emerald-500/20 to-teal-500/20',
 ];
@@ -20,7 +20,7 @@ export function ProjectsSection({ isActive }: ProjectsSectionProps) {
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-5xl w-full mx-auto my-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-brand-olive to-brand-copper bg-clip-text text-transparent">
             Featured Projects
           </span>
         </h2>
@@ -42,7 +42,7 @@ export function ProjectsSection({ isActive }: ProjectsSectionProps) {
               </div>
 
               <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-100 mb-2 group-hover:text-cyan-300 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-100 mb-2 group-hover:text-brand-copper-bright transition-colors">
                   {project.name}
                 </h3>
                 <p className="text-sm text-gray-400 mb-4 leading-relaxed">
@@ -54,7 +54,7 @@ export function ProjectsSection({ isActive }: ProjectsSectionProps) {
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-2 py-0.5 text-xs bg-slate-700/50 text-cyan-300 rounded-full border border-slate-600/50"
+                      className="px-2 py-0.5 text-xs bg-slate-700/50 text-brand-copper-bright rounded-full border border-slate-600/50"
                     >
                       {t}
                     </span>
@@ -63,7 +63,7 @@ export function ProjectsSection({ isActive }: ProjectsSectionProps) {
 
                 <Link
                   href={project.link}
-                  className="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm text-brand-copper hover:text-brand-copper-bright transition-colors"
                 >
                   View Project <ExternalLink className="w-3.5 h-3.5" />
                 </Link>

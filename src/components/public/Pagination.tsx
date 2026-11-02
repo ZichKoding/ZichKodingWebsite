@@ -41,7 +41,7 @@ export function Pagination({
       {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="p-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-blue-500/50 transition-all"
+          className="p-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-brand-copper/50 transition-all"
           aria-label="Previous page"
         >
           <ChevronLeft size={20} />
@@ -78,7 +78,7 @@ export function Pagination({
               ) : (
                 <Link
                   href={getPageUrl(page)}
-                  className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-blue-500/50 transition-all"
+                  className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-brand-copper/50 transition-all"
                   aria-label={`Go to page ${page}`}
                 >
                   {page}
@@ -93,7 +93,7 @@ export function Pagination({
       {currentPage < totalPages ? (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="p-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-blue-500/50 transition-all"
+          className="p-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-gray-300 hover:text-white hover:border-brand-copper/50 transition-all"
           aria-label="Next page"
         >
           <ChevronRight size={20} />

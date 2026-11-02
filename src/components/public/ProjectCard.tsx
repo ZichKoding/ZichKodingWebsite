@@ -25,7 +25,7 @@ export function ProjectCard({
 
   return (
     <div
-      className={`group rounded-lg overflow-hidden bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 ${
+      className={`group rounded-lg overflow-hidden bg-slate-800/50 border border-slate-700/50 hover:border-brand-copper/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 ${
         featured ? 'md:col-span-2 lg:col-span-2' : ''
       }`}
     >
@@ -49,7 +49,7 @@ export function ProjectCard({
       {/* Content */}
       <div className="p-6">
         {/* Title */}
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-brand-copper transition-colors">
           {title}
         </h3>
 
@@ -64,7 +64,7 @@ export function ProjectCard({
             {tech_stack.map((tech) => (
               <span
                 key={tech}
-                className="inline-block px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded-full font-medium"
+                className="inline-block px-2 py-1 text-xs bg-blue-500/20 text-brand-copper-bright rounded-full font-medium"
               >
                 {tech}
               </span>
@@ -79,7 +79,7 @@ export function ProjectCard({
               href={live_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+              className="flex items-center gap-2 text-brand-copper hover:text-brand-copper-bright transition-colors text-sm font-medium"
               aria-label="Visit live site"
             >
               <span>Live</span>
@@ -92,7 +92,7 @@ export function ProjectCard({
               href={github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+              className="flex items-center gap-2 text-brand-copper hover:text-brand-copper-bright transition-colors text-sm font-medium"
               aria-label="View on GitHub"
             >
               <span>Code</span>

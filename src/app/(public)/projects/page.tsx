@@ -5,7 +5,7 @@ import { ProjectCard } from '@/components/public/ProjectCard';
 export const metadata: Metadata = {
   title: 'Projects - Chris Zichko | ZichKoding',
   description:
-    'Real projects: a Rust terminal AI agent, an offline Android AI companion, persistent-memory tooling, and production compliance-platform work.',
+    'Production compliance work, ZichKode, Alam, and the local harness around Gemma 4 E4B.',
 };
 
 export default function ProjectsPage() {

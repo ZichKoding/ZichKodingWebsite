@@ -53,14 +53,11 @@ export function generateGradient(seed: string): string {
 
   // Map hash to color pairs
   const colors = [
-    ['from-blue-600', 'to-purple-600'],
-    ['from-purple-600', 'to-pink-600'],
-    ['from-emerald-600', 'to-teal-600'],
-    ['from-orange-600', 'to-red-600'],
-    ['from-indigo-600', 'to-blue-600'],
-    ['from-cyan-600', 'to-blue-600'],
-    ['from-amber-600', 'to-orange-600'],
-    ['from-rose-600', 'to-pink-600'],
+    ['from-brand-olive', 'to-brand-copper'],
+    ['from-brand-copper', 'to-neutral-950'],
+    ['from-neutral-800', 'to-brand-olive'],
+    ['from-brand-copper', 'to-brand-olive'],
+    ['from-neutral-900', 'to-brand-copper'],
   ];
 
   const colorIndex = Math.abs(hash) % colors.length;

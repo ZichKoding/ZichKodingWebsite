@@ -54,7 +54,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Back Link */}
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-8 font-medium"
+        className="inline-flex items-center gap-2 text-brand-copper hover:text-brand-copper-bright transition-colors mb-8 font-medium"
       >
         <ArrowLeft size={20} />
         Back to blog
@@ -83,7 +83,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <Tag size={18} />
             <Link
               href={`/blog?category=${slugForCategory(post.category)}`}
-              className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm hover:bg-blue-500/30 transition-colors"
+              className="px-3 py-1 bg-blue-500/20 text-brand-copper-bright rounded-full text-sm hover:bg-blue-500/30 transition-colors"
             >
               {post.category}
             </Link>
@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Back Link */}
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium mt-12 pt-8 border-t border-slate-800"
+        className="inline-flex items-center gap-2 text-brand-copper hover:text-brand-copper-bright transition-colors font-medium mt-12 pt-8 border-t border-slate-800"
       >
         <ArrowLeft size={20} />
         Back to blog

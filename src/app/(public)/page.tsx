@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { HomePage } from '@/components/home/HomePage';
 
 export const metadata: Metadata = {
-  title: 'Chris Zichko - Developer & Technology Manager | AI Systems Builder',
+  title: 'Chris Zichko - Lead Developer & Technology Manager',
   description:
-    "Explore Chris Zichko's portfolio through an interactive space-themed terminal: production PHP systems by day, local-first AI agents in Rust and Kotlin by night, freelance via ZichKoding.",
+    'Lead Developer and Technology Manager. Traditional software, AI engineering, and small open models on the device, driven by Gemma 4 E4B.',
   keywords: [
     'software engineer',
     'AI engineering',

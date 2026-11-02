@@ -20,7 +20,7 @@ export function SkillsSection({ isActive }: SkillsSectionProps) {
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-5xl w-full mx-auto my-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-brand-olive to-brand-copper bg-clip-text text-transparent">
             Technical Skills
           </span>
         </h2>
@@ -39,8 +39,8 @@ export function SkillsSection({ isActive }: SkillsSectionProps) {
                 }}
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon className="w-5 h-5 text-cyan-400" />
-                  <h3 className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">
+                  <Icon className="w-5 h-5 text-brand-copper" />
+                  <h3 className="text-sm font-semibold text-brand-copper-bright uppercase tracking-wider">
                     {category}
                   </h3>
                 </div>
@@ -48,7 +48,7 @@ export function SkillsSection({ isActive }: SkillsSectionProps) {
                 <ul className="space-y-2">
                   {items.map((skill) => (
                     <li key={skill.name} className="flex items-baseline gap-2 text-sm">
-                      <span className="text-cyan-500/70 shrink-0" aria-hidden="true">
+                      <span className="text-brand-olive shrink-0" aria-hidden="true">
                         ▹
                       </span>
                       <span className="text-gray-300">{skill.name}</span>

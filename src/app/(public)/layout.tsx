@@ -5,9 +5,9 @@ import { PublicLayoutClient } from '@/components/public/PublicLayoutClient';
 import { getAllPosts } from '@/lib/content/blog';
 
 export const metadata: Metadata = {
-  title: 'Chris Zichko | ZichKoding — Portfolio',
+  title: 'Chris Zichko | ZichKoding',
   description:
-    'Portfolio of Chris Zichko: production systems owner and builder of local-first AI tools — Rust agent harnesses, on-device Android AI, and persistent-memory systems.',
+    'Lead Developer and Technology Manager. Traditional software, AI engineering, and small open models on the device, driven by Gemma 4 E4B.',
 };
 
 export default function PublicLayout({
@@ -23,10 +23,9 @@ export default function PublicLayout({
 
   return (
     <PublicLayoutClient recentPosts={recentPosts}>
-      <div className="flex flex-col min-h-screen bg-slate-950">
-        {/* Starfield background effect */}
+      <div className="flex flex-col min-h-screen bg-black">
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(189,118,74,0.18),rgba(0,0,0,0))]" />
         </div>
 
         {/* Content */}

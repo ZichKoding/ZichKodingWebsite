@@ -35,14 +35,14 @@ export default function ContactPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-blue-500/20 rounded-lg">
-                  <Mail className="text-blue-400" size={24} />
+                  <Mail className="text-brand-copper" size={24} />
                 </div>
                 <h3 className="text-xl font-semibold text-white">Email</h3>
               </div>
               <p className="text-gray-400">
                 <a
                   href="mailto:hello@example.com"
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-brand-copper hover:text-brand-copper-bright transition-colors"
                 >
                   hello@example.com
                 </a>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-blue-400 hover:border-blue-500/50 transition-all"
+                  className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-brand-copper hover:border-brand-copper/50 transition-all"
                   aria-label="GitHub"
                 >
                   <Github size={24} />
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-blue-400 hover:border-blue-500/50 transition-all"
+                  className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-brand-copper hover:border-brand-copper/50 transition-all"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={24} />

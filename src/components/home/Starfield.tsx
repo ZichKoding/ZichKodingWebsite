@@ -137,12 +137,12 @@ export const Starfield = forwardRef<StarfieldHandle>(
         const isWarping = !reduced && (isWarpingRef.current || speed > BASE_SPEED * 2);
 
         // Clear with near-black background
-        ctx.fillStyle = '#050510';
+        ctx.fillStyle = '#000000';
         ctx.fillRect(0, 0, w, h);
 
         // Subtle radial vignette
         const vignette = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.7);
-        vignette.addColorStop(0, 'rgba(5, 5, 16, 0)');
+        vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
         vignette.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
         ctx.fillStyle = vignette;
         ctx.fillRect(0, 0, w, h);
@@ -180,7 +180,7 @@ export const Starfield = forwardRef<StarfieldHandle>(
             const prevScreenY = (star.y / star.prevZ) * FOCAL_LENGTH + cy;
 
             const streakAlpha = Math.min(brightness * 0.8, 0.9);
-            ctx.strokeStyle = `rgba(200, 220, 255, ${streakAlpha})`;
+            ctx.strokeStyle = `rgba(189, 118, 74, ${streakAlpha})`;
             ctx.lineWidth = Math.max(0.5, radius * 0.6);
             ctx.beginPath();
             ctx.moveTo(prevScreenX, prevScreenY);
@@ -191,14 +191,14 @@ export const Starfield = forwardRef<StarfieldHandle>(
           // Draw star dot
           ctx.beginPath();
           ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(220, 230, 255, ${brightness})`;
+          ctx.fillStyle = `rgba(212, 165, 116, ${brightness})`;
           ctx.fill();
 
           // Glow for closer/brighter stars
           if (radius > 1.5) {
             ctx.beginPath();
             ctx.arc(screenX, screenY, radius * 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(180, 200, 255, ${brightness * 0.15})`;
+            ctx.fillStyle = `rgba(119, 126, 95, ${brightness * 0.2})`;
             ctx.fill();
           }
         }

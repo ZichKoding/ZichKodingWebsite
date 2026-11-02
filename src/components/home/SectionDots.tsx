@@ -39,7 +39,7 @@ export function SectionDots({ sections, activeIndex, onNavigate }: SectionDotsPr
           <span
             className={`block rounded-full transition-all duration-300 ${
               idx === activeIndex
-                ? 'w-3 h-3 bg-cyan-400 shadow-lg shadow-cyan-500/40'
+                ? 'w-3 h-3 bg-brand-copper shadow-lg shadow-brand-copper/30'
                 : 'w-2 h-2 bg-gray-600 hover:bg-gray-400'
             }`}
           />

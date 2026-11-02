@@ -4,7 +4,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800/50">
+    <footer className="bg-black border-t border-brand-olive/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col items-center justify-center gap-6">
           {/* Social Links */}
@@ -13,7 +13,7 @@ export function Footer() {
               href="https://github.com/ZichKoding"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-400 transition-colors"
+              className="text-gray-400 hover:text-brand-copper transition-colors"
               aria-label="GitHub"
             >
               <Github size={24} />
@@ -22,14 +22,14 @@ export function Footer() {
               href="https://www.linkedin.com/in/chris-zichko-264b25217/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-400 transition-colors"
+              className="text-gray-400 hover:text-brand-copper transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin size={24} />
             </a>
             <a
               href="mailto:chriszichkocoding@gmail.com"
-              className="text-gray-400 hover:text-blue-400 transition-colors"
+              className="text-gray-400 hover:text-brand-copper transition-colors"
               aria-label="Email"
             >
               <Mail size={24} />

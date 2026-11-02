@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { TERMINAL_DATA } from '@/data/terminal-data';
 import { GraduationCap, Shield, Server, Briefcase } from 'lucide-react';
 
@@ -9,7 +10,7 @@ interface AboutSectionProps {
 }
 
 const highlights = [
-  { icon: Server, label: 'Developer & Technology Manager @ ARA' },
+  { icon: Server, label: 'Lead Developer & Technology Manager @ ARA' },
   { icon: Shield, label: 'U.S. Marine Corps Veteran' },
   { icon: Briefcase, label: 'Freelance via ZichKoding since 2021' },
   { icon: GraduationCap, label: 'UCF Certified Full-Stack Developer' },
@@ -19,14 +20,28 @@ export function AboutSection({ isActive }: AboutSectionProps) {
   return (
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-3xl w-full mx-auto my-auto">
-        <div className="bg-slate-800/30 border border-cyan-500/20 rounded-2xl p-6 sm:p-10 backdrop-blur-sm">
-          {/* Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Chris Zichko
-            </span>
+        <div className="bg-black/50 border border-brand-olive/40 rounded-2xl p-6 sm:p-10 backdrop-blur-sm">
+          <video
+            className="brand-loop mx-auto mb-6"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          >
+            <source src="/brand/brand-animation.webm" type="video/webm" />
+          </video>
+          <Image
+            src="/brand/logo.png"
+            alt="ZichKoding"
+            width={1555}
+            height={493}
+            className="brand-still mx-auto mb-6 h-auto w-full max-w-md"
+          />
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 text-center">
+            <span className="text-brand-olive">Chris Zichko</span>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 mb-6">
+          <p className="text-lg sm:text-xl text-gray-400 mb-6 text-center">
             {TERMINAL_DATA.aboutTagline}
           </p>
 
@@ -53,7 +68,7 @@ export function AboutSection({ isActive }: AboutSectionProps) {
                     transition: `opacity 0.5s ease ${0.1 * i}s, transform 0.5s ease ${0.1 * i}s`,
                   }}
                 >
-                  <Icon className="w-5 h-5 text-cyan-400 shrink-0" />
+                  <Icon className="w-5 h-5 text-brand-copper shrink-0" />
                   <span className="text-gray-300 text-sm">{item.label}</span>
                 </div>
               );

@@ -15,7 +15,7 @@ export function HowIWorkSection({ isActive }: HowIWorkSectionProps) {
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-5xl w-full mx-auto my-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-brand-olive to-brand-copper bg-clip-text text-transparent">
             How I Work
           </span>
         </h2>
@@ -31,8 +31,8 @@ export function HowIWorkSection({ isActive }: HowIWorkSectionProps) {
             }}
           >
             <div className="flex items-center gap-2 mb-4">
-              <Compass className="w-5 h-5 text-teal-400" />
-              <h3 className="text-sm font-semibold text-teal-300 uppercase tracking-wider">
+              <Compass className="w-5 h-5 text-brand-olive" />
+              <h3 className="text-sm font-semibold text-brand-olive uppercase tracking-wider">
                 Operating Principles
               </h3>
             </div>

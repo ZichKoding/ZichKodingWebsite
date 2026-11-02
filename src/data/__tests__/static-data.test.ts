@@ -43,6 +43,33 @@ describe('static skill data', () => {
   });
 });
 
+describe('public claim fence', () => {
+  const publicCopy = [
+    ...TERMINAL_DATA.aboutParagraphs,
+    TERMINAL_DATA.aboutTagline,
+    TERMINAL_DATA.about,
+    ...TERMINAL_DATA.career.map((entry) => `${entry.role} ${entry.description}`),
+    ...TERMINAL_DATA.howIWork.strengths,
+    ...TERMINAL_DATA.howIWork.growthAreas,
+    ...PROJECTS.map((project) => `${project.title} ${project.description}`),
+    ...SKILLS.flatMap((category) => category.items.map((item) => `${item.name} ${item.note ?? ''}`)),
+  ].join('\n');
+
+  it('does not publish the ARA headcount or the retired release line', () => {
+    const banned = ['sole', 'bi-weekly', 'Shenron', 'limited resources', 'solo when'];
+    for (const phrase of banned) {
+      expect(publicCopy.toLowerCase()).not.toContain(phrase);
+    }
+  });
+
+  it('names the local model and the public app names', () => {
+    expect(publicCopy).toContain('Gemma 4 E4B');
+    expect(publicCopy).toContain('Alam');
+    expect(publicCopy).toContain('ZichKode');
+    expect(publicCopy).toContain('Lead Developer & Technology Manager');
+  });
+});
+
 describe('career data', () => {
   it('entries are complete and use qualitative or real periods', () => {
     for (const entry of TERMINAL_DATA.career) {

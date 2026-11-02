@@ -14,9 +14,9 @@ const contactItems = [
     label: 'Email',
     value: 'chriszichkocoding@gmail.com',
     href: 'mailto:chriszichkocoding@gmail.com',
-    color: 'text-cyan-400',
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/30',
+    color: 'text-brand-copper',
+    bg: 'bg-brand-copper/10',
+    border: 'border-brand-copper/30',
   },
   {
     icon: Github,
@@ -32,7 +32,7 @@ const contactItems = [
     label: 'LinkedIn',
     value: 'Chris Zichko',
     href: 'https://linkedin.com/in/chris-zichko-264b25217/',
-    color: 'text-blue-400',
+    color: 'text-brand-copper',
     bg: 'bg-blue-500/10',
     border: 'border-blue-500/30',
   },
@@ -43,7 +43,7 @@ export function ContactSection({ isActive }: ContactSectionProps) {
     <div className="h-full flex flex-col px-4 sm:px-6 py-8 overflow-y-auto">
       <div className="max-w-3xl w-full mx-auto my-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-brand-olive to-brand-copper bg-clip-text text-transparent">
             Get In Touch
           </span>
         </h2>
@@ -75,7 +75,7 @@ export function ContactSection({ isActive }: ContactSectionProps) {
         <div className="text-center">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-400/50 transition-all text-sm font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-copper/10 border border-brand-copper/30 text-brand-copper-bright hover:bg-brand-copper/20 hover:border-brand-copper/50 transition-all text-sm font-medium"
           >
             Send a Message <ArrowRight className="w-4 h-4" />
           </Link>
