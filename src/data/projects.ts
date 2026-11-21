@@ -49,7 +49,6 @@ export const PROJECTS: StaticProject[] = [
     description:
       'Rust harness for local work on Gemma 4 E4B through Ollama. The plan, the skills, and the retrieved context sit outside the prompt, so a 16k window can carry a long task. In active development.',
     tech_stack: ['Rust', 'Ollama', 'Gemma 4 E4B', 'CLI'],
-    github_url: 'https://github.com/ZichKoding/senku',
     featured: true,
     display_order: 3,
   },
