@@ -95,16 +95,17 @@ export function HomePage() {
     [isTransitioning, activeSection, ctx]
   );
 
-  // Watch for terminal section scroll commands
+  // Let terminal section commands call straight into navigation while mounted
+  const { sectionScrollHandlerRef } = ctx;
   useEffect(() => {
-    if (ctx.pendingSectionScroll) {
-      const idx = SECTIONS.indexOf(ctx.pendingSectionScroll as typeof SECTIONS[number]);
-      if (idx !== -1) {
-        navigateToSection(idx);
-      }
-      ctx.clearPendingSectionScroll();
-    }
-  }, [ctx.pendingSectionScroll, ctx, navigateToSection]);
+    sectionScrollHandlerRef.current = (section: string) => {
+      const idx = SECTIONS.indexOf(section as typeof SECTIONS[number]);
+      if (idx !== -1) navigateToSection(idx);
+    };
+    return () => {
+      sectionScrollHandlerRef.current = null;
+    };
+  }, [sectionScrollHandlerRef, navigateToSection]);
 
   // Check if an input-like element is focused
   const isInputFocused = useCallback(() => {

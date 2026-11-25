@@ -26,8 +26,8 @@ interface TerminalContextValue {
   isOnHomepage: boolean;
   starfieldRef: React.RefObject<StarfieldHandle | null>;
   isInitialized: boolean;
-  pendingSectionScroll: string | null;
-  clearPendingSectionScroll: () => void;
+  /** HomePage puts its section-navigation handler here while it's mounted. */
+  sectionScrollHandlerRef: React.RefObject<((section: string) => void) | null>;
 }
 
 const TerminalContext = createContext<TerminalContextValue | null>(null);
@@ -67,15 +67,13 @@ export function TerminalProvider({
   // Ref guard: state updates don't flush fast enough to stop React 19
   // StrictMode's double-effect from initializing twice.
   const hasInitializedRef = useRef(false);
-  const [pendingSectionScroll, setPendingSectionScroll] = useState<string | null>(null);
+  const sectionScrollHandlerRef = useRef<((section: string) => void) | null>(null);
   const starfieldRef = useRef<StarfieldHandle>(null);
-
-  const clearPendingSectionScroll = useCallback(() => setPendingSectionScroll(null), []);
 
   const onSectionScroll = useCallback(
     (section: string) => {
       if (isOnHomepage) {
-        setPendingSectionScroll(section);
+        sectionScrollHandlerRef.current?.(section);
       }
     },
     [isOnHomepage]
@@ -127,8 +125,7 @@ export function TerminalProvider({
         isOnHomepage,
         starfieldRef,
         isInitialized,
-        pendingSectionScroll,
-        clearPendingSectionScroll,
+        sectionScrollHandlerRef,
       }}
     >
       {/* Site-wide animated starfield (fixed, z-0, honors prefers-reduced-motion).
