@@ -2,14 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-  },
+  // No images.remotePatterns: every image is served from /public, so the
+  // image optimizer only accepts local paths. Add specific hosts here if a
+  // remote image is ever needed; never a wildcard.
   async headers() {
     return [
       {
