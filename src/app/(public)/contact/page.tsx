@@ -54,7 +54,7 @@ export default function ContactPage() {
               <h3 className="text-lg font-semibold text-white">Connect With Me</h3>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/ZichKoding"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-brand-copper hover:border-brand-copper/50 transition-all"
@@ -63,7 +63,7 @@ export default function ContactPage() {
                   <Github size={24} />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/chris-zichko-264b25217/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-lg text-gray-400 hover:text-brand-copper hover:border-brand-copper/50 transition-all"
